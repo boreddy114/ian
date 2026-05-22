@@ -14,7 +14,7 @@ export default function DocumentView({ memo }: { memo: any }) {
 
         const opt = {
           margin: 1,
-          filename: `${memo.company}_${memo.date}.pdf`,
+          filename: `${memo.company || "N-A"}_${memo.date || "Present"}.pdf`,
           image: { type: 'jpeg', quality: 0.98 },
           html2canvas: { scale: 2 },
           jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
@@ -48,17 +48,17 @@ export default function DocumentView({ memo }: { memo: any }) {
       const footer = "</body></html>";
       
       const content = `
-        <h1>${memo.title}</h1>
+        <h1>${memo.title || "Untitled Memo"}</h1>
         <div class="metadata">
-          <div class="metadata-item"><span class="label">Author:</span> <span class="value">${memo.author}</span></div>
-          <div class="metadata-item"><span class="label">Date:</span> <span class="value">${memo.date}</span></div>
-          <div class="metadata-item"><span class="label">Framework:</span> <span class="value">${memo.framework}</span></div>
+          <div class="metadata-item"><span class="label">Author:</span> <span class="value">${memo.author || "Unknown Author"}</span></div>
+          <div class="metadata-item"><span class="label">Date:</span> <span class="value">${memo.date || "Present"}</span></div>
+          <div class="metadata-item"><span class="label">Framework:</span> <span class="value">${memo.framework || "N/A"}</span></div>
         </div>
         <h2>Context</h2>
-        <p>${memo.content}</p>
+        <p>${memo.content || ""}</p>
         <h2>Thesis Tracker</h2>
         <ul>
-          ${memo.tracker.map((item: string) => `<li>${item}</li>`).join('')}
+          ${(memo.tracker || []).map((item: string) => `<li>${item}</li>`).join('')}
         </ul>
       `;
       
@@ -67,7 +67,7 @@ export default function DocumentView({ memo }: { memo: any }) {
       const url = URL.createObjectURL(fileBlob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${memo.company}_${memo.date}.doc`;
+      a.download = `${memo.company || "N-A"}_${memo.date || "Present"}.doc`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -81,7 +81,7 @@ export default function DocumentView({ memo }: { memo: any }) {
     <div className="document-pane" ref={documentRef}>
       <div className="document-header">
         <div className="breadcrumbs">
-          <span>Nexus Vault</span> / <span className="highlight-text">{memo.company}</span> / <span className="current">{memo.title}</span>
+          <span>Nexus Vault</span> / <span className="highlight-text">{memo.company || "N/A"}</span> / <span className="current">{memo.title || "Untitled Memo"}</span>
         </div>
         <div className="pdf-export-container">
           <button className="premium-btn" onClick={generatePDF}>
@@ -106,34 +106,34 @@ export default function DocumentView({ memo }: { memo: any }) {
       </div>
       
       <div className="document-content">
-        <h1 className="doc-title">{memo.title}</h1>
+        <h1 className="doc-title">{memo.title || "Untitled Memo"}</h1>
         
         <div className="premium-callout">
           <div className="callout-grid">
             <div className="callout-item">
               <span className="label">Author</span>
-              <span className="value">{memo.author}</span>
+              <span className="value">{memo.author || "Unknown Author"}</span>
             </div>
             <div className="callout-item">
               <span className="label">Date</span>
-              <span className="value">{memo.date}</span>
+              <span className="value">{memo.date || "Present"}</span>
             </div>
             <div className="callout-item">
               <span className="label">Framework</span>
-              <span className="value highlight-text">{memo.framework}</span>
+              <span className="value highlight-text">{memo.framework || "N/A"}</span>
             </div>
           </div>
         </div>
         
         <h2 className="section-title">Context</h2>
-        <p className="doc-paragraph">{memo.content}</p>
+        <p className="doc-paragraph">{memo.content || ""}</p>
         
         <h2 className="section-title">Thesis Tracker</h2>
         <div className="gradient-divider"></div>
         
         <div className="premium-list">
           <ul>
-            {memo.tracker.map((item: string, index: number) => (
+            {(memo.tracker || []).map((item: string, index: number) => (
               <li key={index}>
                 <span className="list-bullet"></span>
                 {item}

@@ -136,8 +136,11 @@ export default function Home() {
       if (!response.ok) throw new Error('API Error');
       const data = await response.json();
       
+      const responseContent = data.response || "No response received.";
+      const responseChart = data.chart || null;
+
       if (type === 'designer') {
-        if (data.isEdit && activeMemoId) {
+        if (data.isEdit && activeMemoId && data.memo) {
           // Update existing active memo
           setMemos(prev => ({
             ...prev,
@@ -146,10 +149,10 @@ export default function Home() {
           
           setDesignerMessages(prev => [...prev, {
             role: 'ai',
-            content: data.response,
-            chart: data.chart || null
+            content: responseContent,
+            chart: responseChart
           }]);
-        } else {
+        } else if (data.memo && data.memo.company) {
           // Generate new memo
           const newMemoId = "new_memo_" + Date.now();
           setMemos(prev => ({
@@ -159,7 +162,7 @@ export default function Home() {
 
           const newNodeId = "node_" + Date.now();
           setGraphData(prev => ({
-            nodes: [...prev.nodes, { id: newNodeId, name: data.memo.company.slice(0, 15), group: "memo", memoId: newMemoId }],
+            nodes: [...prev.nodes, { id: newNodeId, name: (data.memo.company || "New Memo").slice(0, 15), group: "memo", memoId: newMemoId }],
             links: [...prev.links, { source: newNodeId, target: "6" }] // connect to AI theme
           }));
           
@@ -167,18 +170,26 @@ export default function Home() {
           
           setDesignerMessages(prev => [...prev, {
             role: 'ai',
-            content: data.response,
-            chart: data.chart || null
+            content: responseContent,
+            chart: responseChart
+          }]);
+        } else {
+          // No new memo or edit, just display AI text response
+          setDesignerMessages(prev => [...prev, {
+            role: 'ai',
+            content: responseContent,
+            chart: responseChart
           }]);
         }
       } else {
+        // finance
         setFinanceMessages(prev => [...prev, {
           role: 'ai',
-          content: data.response,
-          chart: data.chart || null
+          content: responseContent,
+          chart: responseChart
         }]);
         
-        if (data.memo) {
+        if (data.memo && data.memo.company) {
           const newMemoId = "new_memo_" + Date.now();
           setMemos(prev => ({
             ...prev,
@@ -187,7 +198,7 @@ export default function Home() {
 
           const newNodeId = "node_" + Date.now();
           setGraphData(prev => ({
-            nodes: [...prev.nodes, { id: newNodeId, name: data.memo.company.slice(0, 15), group: "memo", memoId: newMemoId }],
+            nodes: [...prev.nodes, { id: newNodeId, name: (data.memo.company || "New Memo").slice(0, 15), group: "memo", memoId: newMemoId }],
             links: [...prev.links, { source: newNodeId, target: "6" }] // connect to AI theme
           }));
           setActiveMemoId(newMemoId);
