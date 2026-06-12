@@ -2,6 +2,9 @@
 
 # dependencies
 /node_modules
+**/node_modules
+**/.venv
+**/.DS_Store
 /.pnp
 .pnp.*
 .yarn/*
@@ -39,3 +42,23 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# heavy binary / presentation / image formats ignored recursively
+**/*.pdf
+**/*.zip
+**/*.xlsx
+**/*.tmp
+**/*.pptx
+**/*.HEIC
+**/*.HEIF
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.gif
+**/*.webp
+**/*.docx
+**/*.doc
+
+# allow public assets
+!/public/**/*
+

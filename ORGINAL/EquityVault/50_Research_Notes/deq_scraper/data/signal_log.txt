@@ -1,0 +1,39 @@
+
+===========================================================================
+  SIGNAL ALERT — March 11, 2026  03:33 PM
+  2 new permits detected
+===========================================================================
+
+  EQUIPMENT ORDER BOOK (this alert):
+    CAT    (Caterpillar): 2 gensets ordered
+
+  ───────────────────────────────────────────────────────────────────────
+  SIGNAL 1: [NEW_PERMIT] Other — Article 6 - mNSR
+  ───────────────────────────────────────────────────────────────────────
+    Site:      Cardinal Energy Corporation
+    Reg#:      80941
+    Permit:     | 10/02/2025
+
+    EQUIPMENT ORDERED:
+    ───────────────────────────────────────────────────────────────────
+    Manufacturer   Model               kW each   bhp each    Count
+    ───────────────────────────────────────────────────────────────────
+    Caterpillar    3516                      ?   3,629 hp        ?
+    Caterpillar    3512                      ?   3,448 hp        ?
+    ───────────────────────────────────────────────────────────────────
+    Total gensets:           2
+    Fuel:                    Natural gas
+    NOx limit:               5.0 tpy
+
+    TICKER SIGNAL: CAT
+      CAT (Caterpillar): ? gensets
+      CAT (Caterpillar): ? gensets
+
+  ───────────────────────────────────────────────────────────────────────
+  SIGNAL 2: [NEW_PERMIT] Other — Article 6 - mNSR
+  ───────────────────────────────────────────────────────────────────────
+    Site:      Anthem CDC 3
+    Reg#:      81609
+    Permit:     | 10/24/2013
+
+===========================================================================

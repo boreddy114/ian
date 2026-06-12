@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m markitdown \"Catalini Teaching Deck CSGP.pptx\")",
+      "Bash(python3 -m markitdown --version)",
+      "Bash(python3 -m pip install \"markitdown[pptx]\" --quiet)",
+      "Bash(python3 -c \"from markitdown import MarkItDown; md = MarkItDown\\(\\); result = md.convert\\(\\\\\"/Users/Research/Library/Mobile Documents/com~apple~CloudDocs/Agents/EquityVault/40_Themes/New Moats/Catalini Teaching Deck CSGP.pptx\\\\\"\\); print\\(result.text_content\\)\")",
+      "Bash(pip3 install *)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3)",
+      "Bash(2>&1)",
+      "Bash(python -m markitdown \"Catalini_Teaching_Deck_NOW.pptx\")",
+      "Bash(python -m markitdown \"NOW_ServiceNow Catalini Moat Screen.docx\")",
+      "Bash(pip3 show *)",
+      "Bash(python3 -m markitdown \"Catalini_Teaching_Deck_NOW.pptx\")",
+      "Bash(python3 -m markitdown \"/Users/Research/Library/Mobile Documents/com~apple~CloudDocs/Agents/EquityVault/40_Themes/New Moats/Catalini_Teaching_Deck_NOW.pptx\")",
+      "Bash(python3 -c \"from markitdown import MarkItDown; md = MarkItDown\\(\\); result = md.convert\\('/Users/Research/Library/Mobile Documents/com~apple~CloudDocs/Agents/EquityVault/40_Themes/New Moats/Catalini_Teaching_Deck_NOW.pptx'\\); print\\(result.text_content\\)\")"
+    ]
+  }
+}

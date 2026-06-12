@@ -1,0 +1,1954 @@
+# Cash App SQLite Database Schema — Full Decompile Extract
+# Source: jadx-output from base.apk (Room + SQLiteDatabase migrations)
+# Extracted from androidSqliteDriver.execute() calls in migration classes
+
+## Unique Table Names (332 tables)
+
+EquityAccount
+IF
+LegalDocument
+Stock
+Trade
+accepted_language_disclosure
+accessSettings
+activeRewardOverride
+active_storage_link
+activityInlineMessage
+afterpayApplet
+afterpayAppletMerchantSheet
+afterpayRecentlyViewedMerchant
+alias
+analyticsMessage
+analytics_message
+app2
+apps
+atmWithdrawalAddressSearch
+audience_filter_values
+audit_log_entry
+authenticatorInfo
+availableAccountStatement
+badge
+badgeCount
+badgeGroup
+balanceData
+balance_data
+balance_snapshot
+bankingConfig
+bankingTab
+banking_transaction_customer_ids
+bills
+billsData
+bitcoinMapAddressSearch
+bitcoinTransactionCustomerIds
+bitcoin_transaction_customer_ids
+blockersConfig
+boostConfig
+borrowAppletTile
+borrowAppletVerticalLayout
+borrowConfig
+borrowData
+borrowEntryPoint
+bulletinAppMessage
+businessEligibility
+businessGrants
+cardCustomization
+cardDesign
+cardMessage
+cardScheme
+cardStudio
+cardTabHeroState
+cardTabNullStateConfig
+cardTabNullStateScrollConfig
+cardTabNullStateSwipeConfig
+cashDrawerConfig
+cashDrawerData
+cash_house_screen
+category
+category_in_filter_group
+checkDepositConfig
+clientRoutingConfig
+component_migration
+conditional_properties
+consent_settings
+contact
+contact_alias
+contact_detailed_sync_state
+contact_detailed_sync_state_new
+core_customer
+creditHubApplet
+creditHubEntryPoint
+creditLine
+creditLine_new
+crypto_payroll_preference
+crypto_statement
+crypto_wallet
+cryptocurrencyConfig
+cryptocurrency_config
+custom_order
+customer
+customerStatementType
+customer_backup
+dataPrivacySettings
+default_event_params
+dependentLastSeenSavingsBalance
+deviceUser
+didvManualCaptureConfig
+directDepositAccount
+direct_deposit_account
+document
+documentCategory
+education_story
+education_story_scene_data
+effective_limits
+entity_in_category
+entity_lookup
+entity_range
+event_filters
+event_metadata
+event_payloads
+events
+events_snapshot
+exchange_data
+expressivePaymentsBackgroundConfig
+expressivePaymentsStickerConfig
+extendedProfileDetails
+familyAccount
+family_account
+family_tile
+favorites
+featureFlags
+feature_flags
+files
+filter_for_category
+filter_group
+fullScreenAdConfig
+fullScreenMessage
+giftCard
+globalBorrowData
+globalConfig
+global_log_event_state
+gpsConfig
+homeScreenMessage
+inAppNotificationMessage
+inlineMessage
+inlineMessageV2
+institutionsConfig
+instrument
+instrumentLinkingConfig
+instrumentLinkingOption
+instrument_linking_option
+investing_bitcoin_portfolio_graph_cache
+investing_data
+investing_discovery
+investing_discovery_new
+investing_entity_price_cache
+investing_full_profile
+investing_news_article
+investing_roundups_automation
+investing_roundups_onboarding_flow
+investing_settings
+investing_settings_new
+investing_state
+investing_stocks_portfolio_graph_cache
+investing_suggestions
+investment_entity
+investment_holding
+investment_incentive
+investment_notification_option
+investment_performance
+investment_state
+investment_statement
+invitationConfig
+invitationEntity
+issuedCard
+itemizedReceipt
+lastSeenSavingsBalance
+lendingConfig
+lendingInfo
+lending_transaction_customer_ids
+limitsPagelet
+loan
+loanTransaction
+local_brand_collection
+local_cash_detail_content
+local_fulfillment_configuration
+local_market_screen
+local_tab_content
+locationConfig
+log_event_dropped
+loyaltyAccount
+loyaltyCustomer
+loyaltyHiddenPaymentTypes
+loyaltyNotificationPreference
+loyaltyProgram
+loyalty_customer
+loyalty_program
+main_event_params
+marketCapabilitiesConfig
+market_capabilities
+messageDelivered
+multiBlockerRequests
+newFullScreenMessage
+newInstrumentLinkingConfig
+new_appMessage
+new_app_message
+new_balanceData
+new_balance_data
+new_creditLine
+new_customer
+new_device_user
+new_entity_config
+new_instrument
+new_instrumentLinkingOption
+new_loan
+new_payment
+new_profile
+new_profileDirectorySection
+new_reward
+new_reward_status
+new_storage_link
+new_sync_entity
+new_tutorials
+new_unhandled_sync_entity
+no_data_mode_events
+notificationPreference
+offersCollectionDetail
+offersFilterGroupsSection
+offersHome
+offersRecentlyViewed
+offersSearch
+offersSheet
+offlineConfig
+offline_config
+orderedRewardToken
+p2pSettings
+paperDepositBarcodeInfo
+paper_money_deposit_barcode
+passwordInfo
+payment
+paymentHistoryConfig
+pendingPayment
+pendingSplit
+pendingTransfer
+pending_payment
+pending_transfer
+people
+personalizePaymentBackgroundConfig
+personalizePaymentStickerConfig
+physicalDepositUsAddressSearch
+pins
+placeholder
+pointsProgram
+pointsReward
+points_program
+points_reward
+popupMessage
+productsResultsItem
+productsResultsPaginationToken
+productsResultsSection
+profile
+profileAlias
+profileDetails
+profileDirectoryConfig
+profileDirectoryItem
+profileDirectorySection
+promotedAppletTiles
+promotionDetails
+property_filters
+queue
+ratePlanConfig
+raw_events
+raw_events_metadata
+reactionConfig
+recentMoneybotSession
+recipientConfig
+recipientRecommendation
+recurring_preference
+recurring_preference_copy
+referral_customer_ids
+reward
+rewardMerchant
+rewardSelection
+rewardSlot
+rewardStatus
+reward_slot
+rewardsData
+rewardsData_backup
+rewards_data
+room_master_table
+savingsConfig
+savingsGoalLocalStatus
+savingsHome
+savingsTaxDocument
+scenarioPlan
+scheduled_payment
+selectableReward
+selectable_reward
+selectedReward
+selected_reward
+session
+sharingConfig
+sheetMessage
+shopBrowseCategoryDetails
+shopHubBrowseDetails
+shopInfoDetails
+shoppingRecentSearches
+shoppingRecentlyViewed
+singleAccountHolderEligibility
+stampsConfig
+stamps_config
+starsProgram
+stars_program
+statementAccount
+status_and_limits
+storage_link
+supportConfig
+supportConfig_backup
+supportConfig_new
+supportFlowEvent
+supportedBorrowLocation
+sync_details
+sync_entity
+sync_entity_temp
+sync_pending_entity
+sync_range
+sync_range_temp
+sync_value_issued_card
+temp_investing_roundups_automation
+threadMessage
+threadMessagePage
+threadMessageReaction
+threadsReactionConfig
+tmp_investing_state
+tooltipMessage
+transferInstrumentMap
+transfer_customer_ids
+transport_contexts
+treehouseAppConfig
+treehouseAppConfigurations
+treehouseConfig
+trigger_uris
+trusted_contact
+unhandled_sync_entity
+upcomingBills
+upload_queue
+userRewardsData
+user_attributes
+weaverRecommendationsResponses
+webLoginConfig
+
+## Full CREATE TABLE Statements (latest version of each)
+
+
+                )
+                ON UPDATE CASCADE ON DELETE CASCADE )
+                PRIMARY KEY(`id`)
+                `backoff_delay_duration` INTEGER NOT NULL,
+                `backoff_policy` INTEGER NOT NULL,
+                `content_uri_triggers` BLOB NOT NULL,
+                `flex_duration` INTEGER NOT NULL,
+                `generation` INTEGER NOT NULL DEFAULT 0,
+                `id` TEXT NOT NULL,
+                `initial_delay` INTEGER NOT NULL,
+                `input_merger_class_name` TEXT NOT NULL,
+                `input` BLOB NOT NULL,
+                `interval_duration` INTEGER NOT NULL,
+                `last_enqueue_time` INTEGER NOT NULL,
+                `minimum_retention_duration` INTEGER NOT NULL,
+                `out_of_quota_policy` INTEGER NOT NULL,
+                `output` BLOB NOT NULL,
+                `period_count` INTEGER NOT NULL DEFAULT 0,
+                `required_network_type` INTEGER NOT NULL,
+                `requires_battery_not_low` INTEGER NOT NULL,
+                `requires_charging` INTEGER NOT NULL,
+                `requires_device_idle` INTEGER NOT NULL,
+                `requires_storage_not_low` INTEGER NOT NULL,
+                `run_attempt_count` INTEGER NOT NULL,
+                `run_in_foreground` INTEGER NOT NULL,
+                `schedule_requested_at` INTEGER NOT NULL,
+                `state` INTEGER NOT NULL,
+                `trigger_content_update_delay` INTEGER NOT NULL,
+                `trigger_max_content_delay` INTEGER NOT NULL,
+                `worker_class_name` TEXT NOT NULL,
+            FOREIGN KEY(`work_spec_id`) REFERENCES `WorkSpec`(`id`) 
+            PRIMARY KEY(`work_spec_id`, `generation`), 
+            `generation` INTEGER NOT NULL DEFAULT 0, 
+            `system_id` INTEGER NOT NULL, 
+            `work_spec_id` TEXT NOT NULL, 
+    customization_bitmap BLOB DEFAULT NULL
+    entity_id TEXT NOT NULL PRIMARY KEY,
+    has_password INTEGER NOT NULL
+    info_id INTEGER NOT NULL PRIMARY KEY
+    otp_enabled INTEGER NOT NULL
+    path TEXT NOT NULL PRIMARY KEY,
+    version INTEGER NOT NULL,
+  -- Only should be NULL for DB migration
+  -- TODO tax stuff?
+  -- Temporarily store proto message as a blob until we can migrate to a better storage solution with an internal data model.
+  -- Temporary data to identifty that this instrument came from a sync entity. This is also used as
+  -- Tracks when the message stored from the API, could be used to expire stale data.
+  -- a stop-gap to support deleting instrument sync entities until we build out proper support.
+  CONSTRAINT threadMessagePage_pk PRIMARY KEY (external_id, cursor, page_index)
+  CONSTRAINT threadMessageReaction_pk PRIMARY KEY (token, owner_token, reaction)
+  FOREIGN KEY(external_token, item_type) REFERENCES badge(external_token, item_type) ON DELETE CASCADE
+  FOREIGN KEY(storage_link_id) REFERENCES storage_link(id) ON DELETE CASCADE
+  PRIMARY KEY (base_currency_code, quote_currency_code)
+  PRIMARY KEY (category, investment_entity_token)
+  PRIMARY KEY (category_token, entity_token)
+  PRIMARY KEY (category_token, filter_token)
+  PRIMARY KEY (customer_token, statement_type)
+  PRIMARY KEY (entity_id, created_at)
+  PRIMARY KEY (entity_id, entity_type)
+  PRIMARY KEY (entity_id, type)
+  PRIMARY KEY (external_token, item_type)
+  PRIMARY KEY (external_token, item_type, group_name),
+  PRIMARY KEY (filter_group_token, category_token)
+  PRIMARY KEY (group_id, descriptor_id)
+  PRIMARY KEY (hashed_alias, lookup_key)
+  PRIMARY KEY (profileCurrency, range)
+  PRIMARY KEY (reward_token, merchant_token)
+  PRIMARY KEY(loyalty_program_id)
+  PRIMARY KEY(profile_id) -- Only one DDA per profile allowed.
+  _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  _id INTEGER NOT NULL PRIMARY KEY DEFAULT 0,
+  _id INTEGER NOT NULL PRIMARY KEY DEFAULT 1,
+  about_detail_rows BLOB DEFAULT NULL,
+  about_text TEXT,
+  accent_color BLOB DEFAULT NULL,
+  accent_color TEXT,
+  accessibility_description TEXT
+  accountSwitcher BLOB,
+  account_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  account_id TEXT PRIMARY KEY,
+  account_number_prefix TEXT NOT NULL,
+  account_reference_id TEXT,
+  account_status_url TEXT,
+  account_token TEXT NOT NULL PRIMARY KEY,
+  account_token TEXT,
+  account_type TEXT
+  action BLOB
+  action BLOB,
+  actionUrl TEXT,
+  action_type TEXT,
+  action_url TEXT,
+  activated INTEGER NOT NULL,
+  activation_date_time_ms INTEGER,
+  active_balance_drawer TEXT
+  activity BLOB DEFAULT NULL
+  activityTreehouse BLOB,
+  activity_button_text TEXT DEFAULT NULL,
+  activity_manifest_url TEXT DEFAULT NULL
+  activity_token TEXT
+  add_cash_header_text TEXT DEFAULT NULL,
+  adding_cash_enabled INTEGER NOT NULL,
+  adding_cash_enabled INTEGER,
+  address BLOB DEFAULT NULL
+  address BLOB,
+  address_typeahead_enabled INTEGER DEFAULT NULL,
+  administrative_district TEXT NOT NULL
+  affiliate_link_url TEXT,
+  afterpay_applet_response BLOB NOT NULL
+  alert BLOB
+  allocation_bps INTEGER,
+  already_invited INTEGER NOT NULL DEFAULT 0,
+  amount BLOB NOT NULL,
+  amount BLOB,
+  amount INTEGER,
+  amount_currency TEXT,
+  amount_long INTEGER NOT NULL,
+  amount_usd BLOB NOT NULL,
+  animation BLOB,
+  app_links BLOB DEFAULT NULL
+  app_message_notifications_enabled INTEGER NOT NULL DEFAULT 0,
+  app_name TEXT DEFAULT NULL UNIQUE,
+  app_token TEXT,
+  app_version INTEGER NOT NULL DEFAULT 0,
+  appletId TEXT NOT NULL PRIMARY KEY,
+  application_name TEXT NOT NULL
+  arrowPosition TEXT,
+  asap_fulfillment BLOB,
+  assetUrl TEXT,
+  associated_payment_token TEXT DEFAULT NULL,
+  attempted_add_cash_status_result BLOB
+  attempted_add_cash_status_result BLOB,
+  attempted_bill_status_result BLOB,
+  attempted_cash_out_status_result BLOB,
+  attempted_payment_status_result BLOB,
+  attempted_sync INTEGER NOT NULL DEFAULT 0
+  automated_investment_payment_types BLOB DEFAULT NULL
+  available_amount BLOB,
+  available_p2p_target_regions BLOB DEFAULT NULL,
+  available_reward_payments INTEGER NOT NULL,
+  avatar BLOB DEFAULT NULL,
+  avatar BLOB NOT NULL,
+  avatar BLOB,
+  avatars BLOB,
+  average_cost BLOB
+  backgroundColor BLOB DEFAULT NULL,
+  backgroundColor INTEGER,
+  background_color BLOB,
+  background_url TEXT,
+  badge_version INTEGER NOT NULL,
+  badged INTEGER NOT NULL,
+  balance BLOB DEFAULT NULL
+  balance BLOB DEFAULT NULL,
+  balance_amount INTEGER,
+  balance_amount_version INTEGER NOT NULL DEFAULT 0,
+  balance_amount_version_seen INTEGER NOT NULL DEFAULT 0,
+  balance_card_version INTEGER NOT NULL DEFAULT 0,
+  balance_card_version_seen INTEGER NOT NULL DEFAULT 0
+  balance_currency TEXT
+  balance_currency TEXT,
+  balance_limit_groups BLOB
+  balance_limit_groups BLOB NOT NULL
+  balance_limit_groups BLOB NOT NULL,
+  balance_screen_title TEXT DEFAULT NULL
+  bank_account_linking_config BLOB
+  bank_name TEXT,
+  bankbook_enabled INTEGER DEFAULT NULL,
+  banner BLOB,
+  barcode_number TEXT DEFAULT NULL,
+  base_currency_code TEXT NOT NULL,
+  bill BLOB NOT NULL
+  bills BLOB DEFAULT NULL,
+  bio TEXT
+  bitcoinBoostUpsell BLOB DEFAULT NULL
+  bitcoin_amount_entry_currency_preference TEXT DEFAULT NULL
+  bitcoin_deposit_enabled INTEGER NOT NULL,
+  bitcoin_discovery_url TEXT,
+  bitcoin_display_units TEXT,
+  bitcoin_investment_entity_token TEXT
+  bitcoin_investment_entity_token TEXT,
+  bitcoin_p2p_enabled INTEGER NOT NULL DEFAULT 0
+  bitcoin_withdrawl_enabled INTEGER NOT NULL,
+  black_signature BLOB,
+  blocked TEXT NOT NULL,
+  blockerData BLOB NOT NULL
+  blocker_data BLOB NOT NULL,
+  blocker_descriptor_id TEXT NOT NULL,
+  boost_amount BLOB,
+  boost_attributes BLOB,
+  boost_detail_bottom_upsell BLOB DEFAULT NULL,
+  boost_detail_rows BLOB,
+  borrowed_amount BLOB,
+  borrowed_at INTEGER NOT NULL
+  borrowed_at INTEGER NOT NULL,
+  bounty_amount BLOB DEFAULT NULL,
+  brand_token TEXT NOT NULL PRIMARY KEY,
+  brokerage_account_transfer_will_complete_at_utc INTEGER DEFAULT NULL
+  btc_welcome_message TEXT DEFAULT NULL,
+  business_description TEXT DEFAULT NULL,
+  business_fee INTEGER DEFAULT NULL,
+  business_text1 TEXT DEFAULT NULL,
+  business_text2 TEXT DEFAULT NULL,
+  business_text3 TEXT DEFAULT NULL
+  business_title TEXT DEFAULT NULL,
+  button BLOB,
+  button_stack BLOB,
+  bytes BLOB UNIQUE NOT NULL
+  c4bPromotionVisibility BLOB
+  c4bPromotionVisibility BLOB,
+  cacheTTLInMillis INTEGER
+  campaignToken TEXT
+  campaignToken TEXT,
+  campaign_token TEXT,
+  can_accept_payments INTEGER NOT NULL DEFAULT 0,
+  can_select_multiple_categories INTEGER,
+  can_upgrade_to_business INTEGER NOT NULL DEFAULT 0,
+  can_upgrade_to_business INTEGER,
+  cannotBeDismissed INTEGER NOT NULL DEFAULT 0,
+  canonical_text TEXT PRIMARY KEY NOT NULL,
+  capabilities BLOB NOT NULL
+  captionLeft BLOB,
+  captionRight BLOB,
+  captured_at INTEGER NOT NULL DEFAULT 0,
+  card BLOB
+  cardScheme BLOB
+  card_brand TEXT,
+  card_theme BLOB
+  card_theme BLOB DEFAULT NULL,
+  card_theme BLOB NOT NULL,
+  card_theme TEXT NOT NULL DEFAULT 'BLACK',
+  card_theme TEXT NOT NULL,
+  card_token TEXT DEFAULT NULL,
+  cardholder_name TEXT NOT NULL,
+  cardholder_name TEXT,
+  carousel_url TEXT,
+  cashCardTab BLOB,
+  cashDrawerData BLOB
+  cashOffersTab BLOB,
+  cash_balance_enabled INTEGER DEFAULT NULL,
+  cash_balance_home_screen_button_enabled INTEGER
+  cash_balance_home_screen_button_enabled INTEGER NOT NULL,
+  cash_balance_home_screen_button_priority INTEGER NOT NULL DEFAULT 0,
+  cash_balance_home_screen_button_priority INTEGER NOT NULL,
+  cash_drawer_data BLOB
+  cash_drawer_data BLOB,
+  cash_instrument_type TEXT NOT NULL,
+  cash_merchant_token TEXT NOT NULL,
+  cashtag TEXT UNIQUE DEFAULT NULL,
+  cashtag TEXT,
+  cashtag_enabled INTEGER NOT NULL
+  cashtag_enabled INTEGER NOT NULL DEFAULT 0
+  cashtag_enabled INTEGER NOT NULL DEFAULT 0,
+  cashtag_on_top INTEGER NOT NULL DEFAULT 0
+  cashtag_qr_image_url TEXT DEFAULT NULL,
+  cashtag_url TEXT,
+  cashtag_url_display_text TEXT,
+  cashtag_url_enabled INTEGER NOT NULL DEFAULT 0,
+  cashtag_with_currency_symbol TEXT DEFAULT NULL,
+  category TEXT NOT NULL,
+  category TEXT,
+  category_color BLOB,
+  category_description TEXT,
+  category_id TEXT NOT NULL,
+  category_index INTEGER NOT NULL,
+  category_map BLOB
+  category_map BLOB,
+  category_token TEXT NOT NULL PRIMARY KEY,
+  category_token TEXT NOT NULL REFERENCES category,
+  category_token TEXT NOT NULL,
+  celebration_shown INTEGER NOT NULL DEFAULT 0,
+  check_deposits_enabled INTEGER NOT NULL DEFAULT 0,
+  clear_succeeded_at INTEGER,
+  cleared_at INTEGER,
+  cleared_version INTEGER,
+  client_flow_token TEXT NOT NULL
+  client_id TEXT,
+  client_route TEXT
+  client_route TEXT,
+  client_route_rules BLOB DEFAULT NULL,
+  client_route_rules BLOB NOT NULL,
+  client_scenario TEXT
+  client_scenario TEXT DEFAULT NULL
+  client_scenario TEXT DEFAULT NULL,
+  client_scenario TEXT NOT NULL,
+  code_entry_client_route TEXT,
+  code_entry_enabled INTEGER NOT NULL,
+  color TEXT,
+  colors BLOB
+  colors BLOB,
+  completed_reward_payments INTEGER NOT NULL,
+  completion_token TEXT DEFAULT NULL,
+  component_key TEXT PRIMARY KEY,
+  config BLOB
+  config BLOB DEFAULT NULL
+  config BLOB NOT NULL
+  configuration BLOB
+  confirm_cashtag_recipient INTEGER NOT NULL DEFAULT 0
+  consent_status TEXT DEFAULT NULL,
+  contact_support_url TEXT DEFAULT NULL,
+  content BLOB DEFAULT NULL
+  content BLOB DEFAULT NULL,
+  controls_theme BLOB DEFAULT NULL,
+  core_customer BLOB
+  count INTEGER NOT NULL
+  country TEXT NOT NULL,
+  country_code TEXT,
+  created_at INTEGER
+  created_at INTEGER DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  created_at INTEGER NOT NULL DEFAULT 0,
+  created_at INTEGER NOT NULL,
+  created_at INTEGER,
+  created_at_ms INTEGER NOT NULL
+  credit_card_fee INTEGER,
+  credit_card_fee_bps INTEGER DEFAULT NULL,
+  credit_card_linking_enabled INTEGER DEFAULT NULL,
+  credit_limit BLOB NOT NULL,
+  credit_line_token TEXT NOT NULL,
+  crypto_disclosure_url TEXT,
+  currency TEXT,
+  current_profile_id TEXT
+  current_scheduling_mode TEXT NOT NULL,
+  cursor TEXT NOT NULL,
+  custom_order_configuration BLOB,
+  customerToken TEXT NOT NULL PRIMARY KEY,
+  customerToken TEXT NOT NULL,
+  customer_display_name TEXT,
+  customer_id TEXT PRIMARY KEY
+  customer_id TEXT PRIMARY KEY,
+  customer_id TEXT REFERENCES customer ON DELETE SET NULL,
+  customer_id TEXT,
+  customer_passcode_instrument_token TEXT DEFAULT NULL,
+  customer_phone_number TEXT NOT NULL,
+  customer_since INTEGER,
+  customer_token TEXT NOT NULL PRIMARY KEY,
+  customer_token TEXT NOT NULL,
+  customer_token TEXT UNIQUE DEFAULT NULL,
+  customization_bitmap BLOB DEFAULT NULL
+  daily_gain_params BLOB,
+  dark_image_url TEXT DEFAULT NULL,
+  dark_image_url TEXT,
+  data BLOB NOT NULL
+  data BLOB NOT NULL,
+  date INTEGER,
+  dda_form BLOB DEFAULT NULL,
+  dda_tab BLOB
+  dda_tab BLOB,
+  deep_link_routing BLOB DEFAULT NULL,
+  deep_link_rules BLOB DEFAULT NULL
+  deep_link_rules BLOB NOT NULL
+  deep_link_token TEXT
+  default_currency TEXT
+  default_currency TEXT NOT NULL,
+  default_text_format BLOB,
+  delisted INTEGER NOT NULL DEFAULT 0,
+  delivery_fee BLOB
+  delivery_quote BLOB
+  dependent BLOB,
+  deposit_check BLOB DEFAULT NULL,
+  deposit_preference TEXT,
+  deposit_preference_data BLOB,
+  description TEXT
+  description TEXT DEFAULT NULL
+  description TEXT,
+  description_bank_account_linked TEXT DEFAULT NULL,
+  description_no_instrument_linked TEXT DEFAULT NULL,
+  description_no_instrument_linked_personal TEXT DEFAULT NULL,
+  descriptor_id TEXT NOT NULL,
+  destination_selection_blocker_data BLOB,
+  detail_icon_url TEXT,
+  detail_rows BLOB,
+  detailed_sync_token TEXT DEFAULT NULL
+  details_url TEXT
+  direct_action BLOB,
+  direct_deposit BLOB DEFAULT NULL,
+  direct_deposit_account_enabled INTEGER NOT NULL DEFAULT 0,
+  disclosures_web_url TEXT,
+  discount_text TEXT,
+  dismiss_button_text TEXT DEFAULT NULL
+  dismiss_button_text TEXT DEFAULT NULL,
+  display_complete_account_number INTEGER DEFAULT NULL,
+  display_date INTEGER NOT NULL DEFAULT 0,
+  display_date INTEGER,
+  display_in_carousel INTEGER NOT NULL
+  display_in_carousel INTEGER NOT NULL,
+  display_name TEXT NOT NULL
+  display_name TEXT NOT NULL,
+  display_name TEXT,
+  display_order INTEGER,
+  dividend_setting_type TEXT NOT NULL DEFAULT 'PAYOUT',
+  document BLOB NOT NULL
+  document_date INTEGER NOT NULL,
+  document_date INTEGER,
+  documentsBtc BLOB,
+  documentsStock BLOB
+  documentsStock BLOB,
+  documentsTaxes BLOB,
+  draggable INTEGER NOT NULL DEFAULT 1,
+  drawer BLOB,
+  due_at INTEGER,
+  duration INTEGER,
+  effects BLOB,
+  elements BLOB NOT NULL,
+  email TEXT,
+  email_address TEXT NOT NULL,
+  embeddedImageSection BLOB,
+  enable_cryptocurrency_transfer_in_button_text TEXT
+  enable_cryptocurrency_transfer_in_button_text TEXT,
+  enable_cryptocurrency_transfer_in_status TEXT NOT NULL,
+  enable_cryptocurrency_transfer_out_button_text TEXT
+  enable_cryptocurrency_transfer_out_button_text TEXT,
+  enable_cryptocurrency_transfer_out_status TEXT NOT NULL,
+  enabled INTEGER DEFAULT 0
+  enabled INTEGER DEFAULT NULL,
+  enabled INTEGER NOT NULL
+  enabled INTEGER NOT NULL DEFAULT 0
+  enabled INTEGER NOT NULL DEFAULT 0,
+  enabled INTEGER NOT NULL,
+  enabled INTEGER,
+  encoded_signature TEXT,
+  encrypted_sync_entity BLOB NOT NULL
+  endpoint_type TEXT
+  endpoint_type TEXT,
+  entity BLOB NOT NULL,
+  entity_color BLOB,
+  entity_data BLOB NOT NULL,
+  entity_details_disclosure_text TEXT
+  entity_id TEXT DEFAULT NULL,
+  entity_id TEXT NOT NULL PRIMARY KEY,
+  entity_id TEXT NOT NULL UNIQUE,
+  entity_id TEXT NOT NULL,
+  entity_id TEXT PRIMARY KEY,
+  entity_processor_version INTEGER DEFAULT 0,
+  entity_token TEXT
+  entity_token TEXT NOT NULL PRIMARY KEY,
+  entity_token TEXT NOT NULL REFERENCES investment_entity(token),
+  entity_token TEXT NOT NULL REFERENCES investment_entity,
+  entity_token TEXT NOT NULL UNIQUE,
+  entity_token TEXT NOT NULL,
+  entity_token TEXT,
+  entity_type INTEGER NOT NULL
+  entity_type INTEGER NOT NULL,
+  entity_version INTEGER,
+  equities_discovery_stock_tiles BLOB,
+  equities_discovery_url TEXT,
+  equity_account INTEGER NOT NULL REFERENCES EquityAccount,
+  error_add_cash_status_result BLOB,
+  error_cash_out_status_result BLOB,
+  error_transfer_scenario_plan BLOB
+  expiration TEXT
+  expiration TEXT,
+  expirationHintThresholdBps INTEGER DEFAULT NULL
+  expirationHintThresholdBps INTEGER DEFAULT NULL,
+  expiration_date_millis INTEGER NOT NULL,
+  expiration_date_time_ms INTEGER,
+  expiration_timestamp_millis INTEGER NOT NULL
+  expire_at_ms INTEGER,
+  expiresAtUtc INTEGER DEFAULT NULL
+  expires_at INTEGER DEFAULT 0
+  expires_at INTEGER DEFAULT NULL,
+  expires_at INTEGER,
+  expiry_duration_second INTEGER DEFAULT NULL,
+  explanation_text TEXT DEFAULT NULL
+  explanation_text TEXT DEFAULT NULL,
+  extendedReactions BLOB DEFAULT NULL
+  external_id TEXT
+  external_id TEXT NOT NULL PRIMARY KEY,
+  external_id TEXT NOT NULL,
+  external_id TEXT,
+  external_status_url TEXT,
+  external_token TEXT NOT NULL,
+  eyebrow BLOB DEFAULT NULL,
+  facing_forward INTEGER DEFAULT 0,
+  failure BLOB DEFAULT NULL
+  fallback_client_route TEXT NOT NULL
+  family_account BLOB NOT NULL
+  family_tile_blob BLOB
+  feature_list BLOB,
+  fee_bps INTEGER NOT NULL DEFAULT 0,
+  feed BLOB DEFAULT NULL
+  feed BLOB DEFAULT NULL,
+  feed BLOB NOT NULL
+  file_id INTEGER NOT NULL,
+  file_state TEXT NOT NULL,
+  filter_description TEXT,
+  filter_group_token TEXT NOT NULL REFERENCES filter_group,
+  filter_group_token TEXT NOT NULL,
+  filter_groups_section BLOB NOT NULL
+  filter_token TEXT NOT NULL REFERENCES filter_group,
+  filter_token TEXT NOT NULL,
+  first_error_request_created_at INTEGER DEFAULT NULL,
+  first_error_response_created_at INTEGER DEFAULT NULL,
+  first_error_response_reason TEXT DEFAULT NULL
+  first_time_borrow_data BLOB,
+  first_time_congrats_bitcoin_text TEXT,
+  first_time_congrats_bitcoin_title TEXT,
+  first_time_congrats_equity_detail_text TEXT,
+  first_time_congrats_equity_detail_title TEXT,
+  first_time_congrats_equity_text TEXT,
+  first_time_congrats_equity_title TEXT,
+  firstname TEXT NOT NULL,
+  flag BLOB NOT NULL,
+  flags BLOB
+  flags BLOB NOT NULL
+  flow_token TEXT NOT NULL
+  footerButton BLOB
+  footerButton BLOB DEFAULT NULL,
+  footer_text TEXT
+  footer_text TEXT,
+  foreground_video BLOB,
+  formatted_address TEXT NOT NULL,
+  fresh_at_epoch_ms INTEGER -- null for all files except manifest
+  from_current_customer INTEGER NOT NULL DEFAULT 0,
+  fts_docid INTEGER PRIMARY KEY,
+  fulfillment BLOB,
+  full_name TEXT,
+  full_title_text TEXT,
+  generalBalance BLOB DEFAULT NULL
+  general_balance BLOB DEFAULT NULL
+  get_card_height INTEGER DEFAULT NULL
+  get_card_image_url TEXT DEFAULT NULL,
+  get_card_video_url TEXT DEFAULT NULL,
+  get_card_width INTEGER DEFAULT NULL,
+  get_investments_cursor TEXT
+  get_profile_details_response BLOB NOT NULL
+  getter_customer_tokens BLOB DEFAULT NULL,
+  gifted_investment_entity_token TEXT DEFAULT NULL
+  gifted_investment_entity_token TEXT DEFAULT NULL,
+  globalConfigItems BLOB NOT NULL,
+  group_id TEXT NOT NULL,
+  group_name TEXT NOT NULL PRIMARY KEY,
+  group_name TEXT NOT NULL,
+  guid TEXT
+  hasViewed INTEGER NOT NULL,
+  has_active_brokerage_account INTEGER NOT NULL DEFAULT 0,
+  has_been_seen INTEGER NOT NULL DEFAULT 0
+  has_holdings INTEGER
+  has_holdings INTEGER,
+  has_multiple_customers INTEGER NOT NULL DEFAULT 0,
+  has_passcode INTEGER NOT NULL DEFAULT 0,
+  has_passcode INTEGER NOT NULL,
+  has_passed_idv INTEGER DEFAULT NULL
+  has_passed_idv INTEGER DEFAULT NULL,
+  has_passed_idv INTEGER,
+  has_portfolio INTEGER NOT NULL DEFAULT 0
+  has_portfolio INTEGER NOT NULL DEFAULT 0,
+  has_recently_used_boost INTEGER NOT NULL DEFAULT 0,
+  hash TEXT NOT NULL
+  hashed_alias TEXT
+  hashed_alias TEXT NOT NULL PRIMARY KEY,
+  hashed_alias TEXT NOT NULL REFERENCES alias ON DELETE CASCADE,
+  hashed_alias_id TEXT DEFAULT NULL
+  header BLOB,
+  header TEXT DEFAULT NULL,
+  headerText BLOB,
+  header_bank_account_linked TEXT DEFAULT NULL,
+  header_link_display_text TEXT DEFAULT NULL,
+  header_no_instrument_linked TEXT DEFAULT NULL,
+  header_no_instrument_linked_personal TEXT DEFAULT NULL,
+  headline TEXT NOT NULL,
+  headline TEXT,
+  help_center_url TEXT DEFAULT NULL,
+  hidden_until INTEGER,
+  hideCloseButton INTEGER
+  home_button_text TEXT,
+  home_pill_version INTEGER NOT NULL DEFAULT 0,
+  home_pill_version_seen INTEGER NOT NULL DEFAULT 0,
+  html BLOB,
+  icon BLOB NOT NULL,
+  icon BLOB,
+  icon_url TEXT,
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  id INTEGER NOT NULL PRIMARY KEY DEFAULT 1,
+  id INTEGER NOT NULL PRIMARY KEY,
+  id INTEGER PRIMARY KEY
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id INTEGER PRIMARY KEY NOT NULL
+  id INTEGER PRIMARY KEY NOT NULL,
+  id INTEGER PRIMARY KEY,
+  id TEXT NOT NULL PRIMARY KEY
+  id TEXT NOT NULL PRIMARY KEY,
+  id TEXT PRIMARY KEY NOT NULL,
+  id TEXT PRIMARY KEY,
+  id TEXT UNIQUE,
+  identifier TEXT NOT NULL PRIMARY KEY,
+  image BLOB
+  image BLOB,
+  imageType TEXT NOT NULL DEFAULT 'AVATAR'
+  image_url TEXT,
+  in_address_book INTEGER DEFAULT 1,
+  in_address_book INTEGER NOT NULL DEFAULT 1
+  in_search_category INTEGER NOT NULL DEFAULT 0,
+  in_search_suggestion INTEGER,
+  incoming_request_policy TEXT DEFAULT NULL,
+  incoming_request_policy TEXT,
+  incrementActivityBadge INTEGER NOT NULL,
+  informationButton BLOB
+  informationButton BLOB,
+  initiator_customer_token TEXT,
+  insertedAtUtc INTEGER NOT NULL
+  insertedAtUtc INTEGER NOT NULL,
+  inserted_at_utc INTEGER NOT NULL
+  inserted_at_utc INTEGER NOT NULL,
+  instagram_share_qr_data BLOB
+  institutions BLOB DEFAULT NULL
+  instrument_data BLOB DEFAULT NULL
+  instrument_display_name TEXT,
+  instrument_routing BLOB DEFAULT NULL,
+  instrument_token TEXT PRIMARY KEY,
+  instrument_token TEXT UNIQUE NOT NULL,
+  instrument_type TEXT NOT NULL,
+  instrument_types TEXT NOT NULL,
+  interest_amount BLOB,
+  interval INTEGER DEFAULT NULL
+  intro_blocker_data BLOB,
+  invest_payment_data BLOB DEFAULT NULL,
+  invested_amount BLOB,
+  invested_amount INTEGER NOT NULL,
+  investing_home_disclosure_text TEXT,
+  investing_roundups_automation BLOB
+  investment_entity_token TEXT
+  investment_entity_token TEXT DEFAULT NULL,
+  investment_entity_token TEXT NOT NULL REFERENCES investment_entity,
+  investment_entity_token TEXT NOT NULL,
+  investment_order_type TEXT DEFAULT NULL,
+  invite_all_enabled INTEGER DEFAULT NULL,
+  isBadged INTEGER NOT NULL,
+  isCardItem INTEGER,
+  is_active INTEGER NOT NULL DEFAULT 0,
+  is_active_sponsored_account INTEGER DEFAULT NULL,
+  is_badged INTEGER NOT NULL DEFAULT 0,
+  is_badged INTEGER NOT NULL,
+  is_business INTEGER NOT NULL DEFAULT 0,
+  is_cash_customer INTEGER NOT NULL DEFAULT 0,
+  is_custom_offer INTEGER NOT NULL DEFAULT 0,
+  is_default INTEGER NOT NULL DEFAULT 0
+  is_default INTEGER NOT NULL DEFAULT 0,
+  is_merchant_token INTEGER DEFAULT 0
+  is_outstanding INTEGER NOT NULL,
+  is_placeholder INTEGER NOT NULL,
+  is_special_customer INTEGER NOT NULL DEFAULT 0
+  is_sponsored_account INTEGER,
+  is_square INTEGER NOT NULL DEFAULT 0,
+  is_verified INTEGER NOT NULL DEFAULT 0,
+  is_verified_account INTEGER NOT NULL,
+  is_virtual INTEGER NOT NULL,
+  issue_date INTEGER NOT NULL,
+  issued_card_disabled_style TEXT DEFAULT NULL,
+  issued_cards_enabled INTEGER DEFAULT NULL,
+  item_type TEXT NOT NULL,
+  join_type TEXT
+  joined_on INTEGER DEFAULT NULL,
+  key INTEGER NOT NULL PRIMARY KEY,
+  key TEXT NOT NULL PRIMARY KEY,
+  kind TEXT NOT NULL,
+  last_close INTEGER NOT NULL
+  last_four TEXT NOT NULL,
+  last_qr_code_manifest_url TEXT,
+  last_qr_code_scanned_at INTEGER
+  last_seen_balance BLOB DEFAULT NULL,
+  last_seen_progress_bps INTEGER DEFAULT NULL
+  last_seen_remaining_balance BLOB DEFAULT NULL,
+  last_time_visited INTEGER NOT NULL DEFAULT 0
+  last_time_visited INTEGER NOT NULL DEFAULT 0,
+  last_updated INTEGER NOT NULL
+  last_updated INTEGER NOT NULL DEFAULT 0,
+  last_updated INTEGER NOT NULL,
+  last_updated_at_ms INTEGER DEFAULT NULL
+  last_updated_at_ms INTEGER,
+  last_used_at_epoch_ms INTEGER NOT NULL,
+  lastname TEXT NOT NULL,
+  late_fee_amount BLOB,
+  latest_lookup_key TEXT NOT NULL,
+  latitude REAL,
+  layout TEXT
+  layout TEXT DEFAULT NULL,
+  layout TEXT,
+  learn_about_btc_button_text TEXT DEFAULT NULL,
+  learn_about_btc_url TEXT DEFAULT NULL,
+  legacy_card_theme TEXT DEFAULT NULL,
+  lending_loan_token TEXT DEFAULT NULL,
+  lending_product TEXT,
+  light_image_url TEXT DEFAULT NULL,
+  light_image_url TEXT,
+  limit_amount BLOB NOT NULL,
+  limit_data BLOB,
+  limit_exceeded_message TEXT
+  limited_action TEXT NOT NULL PRIMARY KEY,
+  loan_charge BLOB
+  loan_charge BLOB,
+  loan_drawdown BLOB,
+  loan_payment BLOB
+  loan_payment BLOB,
+  loan_refund BLOB,
+  loan_token TEXT NOT NULL,
+  local INTEGER NOT NULL
+  locale TEXT NOT NULL,
+  location_token TEXT,
+  location_updated_at INTEGER NOT NULL DEFAULT 0
+  locked_by_passcode INTEGER NOT NULL,
+  longitude REAL
+  lookup_key TEXT NOT NULL REFERENCES contact ON DELETE CASCADE,
+  lookup_key TEXT PRIMARY KEY,
+  loyalty_data BLOB,
+  loyalty_merchant_hidden_payment_types BLOB DEFAULT NULL
+  loyalty_merchant_hidden_payment_types BLOB DEFAULT NULL,
+  loyalty_program_id TEXT NOT NULL
+  loyalty_program_id TEXT NOT NULL REFERENCES loyaltyProgram,
+  loyalty_program_id TEXT NOT NULL REFERENCES loyalty_program ON DELETE CASCADE,
+  loyalty_unit BLOB NOT NULL
+  loyalty_unit BLOB NOT NULL,
+  main_screen_balance_subtitle TEXT DEFAULT NULL,
+  main_screen_title TEXT DEFAULT NULL,
+  main_text TEXT,
+  main_url TEXT,
+  manifest_for_application_name TEXT, -- LIKE 'red' or maybe 'red.manifest.json', null for all files except manifest
+  market_cap INTEGER NOT NULL,
+  maxDisplayItems INTEGER,
+  maxEmojisPerReaction INTEGER NOT NULL DEFAULT 0,
+  max_credit_prompts INTEGER DEFAULT NULL,
+  merchant_avatar_url TEXT NOT NULL,
+  merchant_data BLOB,
+  merchant_id TEXT NOT NULL,
+  merchant_id TEXT,
+  merchant_name TEXT NOT NULL,
+  merchant_name TEXT,
+  merchant_token TEXT
+  merchant_token TEXT NOT NULL
+  merchant_token TEXT NOT NULL,
+  message BLOB NOT NULL
+  message BLOB,
+  message TEXT NOT NULL
+  messageToken TEXT PRIMARY KEY NOT NULL,
+  messageToken TEXT UNIQUE REFERENCES bulletinAppMessage,
+  messageType TEXT DEFAULT NULL,
+  message_format BLOB NOT NULL
+  message_format BLOB NOT NULL,
+  message_id TEXT PRIMARY KEY,
+  message_template TEXT DEFAULT NULL,
+  message_token TEXT NOT NULL PRIMARY KEY,
+  message_token TEXT PRIMARY KEY NOT NULL,
+  message_uuid TEXT NOT NULL PRIMARY KEY,
+  met INTEGER NOT NULL DEFAULT 0
+  met INTEGER NOT NULL DEFAULT 0,
+  metadata BLOB
+  metadata BLOB,
+  metadata_id TEXT
+  metadata_id TEXT,
+  migration_version INTEGER NOT NULL
+  min_scheduled_btc_buy_amt BLOB,
+  min_scheduled_stock_buy_amt BLOB,
+  minimal_commit_timestamp TEXT DEFAULT NULL
+  minimum_code_length INTEGER NOT NULL,
+  minimum_loan_amount BLOB,
+  minimum_withdrawal_limit_sats INTEGER DEFAULT NULL
+  moneyBtcApplet BLOB,
+  moneyEarningsApplet BLOB
+  moneyEarningsApplet BLOB,
+  moneyFamiliesApplet BLOB,
+  moneyGlobalBorrowApplet BLOB,
+  moneyInvestingApplet BLOB,
+  moneyTabHomeDesignSystem BLOB,
+  moneyTaxesApplet BLOB,
+  moneybotVisibility BLOB
+  moneybotVisibility BLOB,
+  my_first_bitcoin_configuration BLOB,
+  my_first_stock_configuration BLOB,
+  my_watchlist_description TEXT
+  my_watchlist_description TEXT,
+  name TEXT NOT NULL PRIMARY KEY,
+  name TEXT NOT NULL,
+  name TEXT UNIQUE,
+  name_plural TEXT,
+  nature TEXT NOT NULL,
+  nearby_visibility TEXT NOT NULL,
+  nearby_visibility TEXT,
+  new_to_boost INTEGER NOT NULL DEFAULT 0
+  new_to_boost INTEGER NOT NULL DEFAULT 0,
+  new_token TEXT DEFAULT NULL,
+  nextRefreshAtMillis INTEGER NOT NULL,
+  next_cursor TEXT,
+  next_payment_at INTEGER,
+  next_reload_at INTEGER NOT NULL,
+  next_reload_at INTEGER,
+  nfc_card_linking_enabled INTEGER DEFAULT 0
+  nfc_card_linking_enabled INTEGER DEFAULT 0,
+  node_token TEXT,
+  note TEXT,
+  offer_amount BLOB NOT NULL,
+  offer_type TEXT
+  offerly_token TEXT,
+  offers_collection_response BLOB NOT NULL
+  offers_home_response BLOB NOT NULL
+  offers_search_response BLOB NOT NULL
+  offers_search_response BLOB NOT NULL,
+  offers_sheet_response BLOB NOT NULL
+  offers_sheet_response BLOB NOT NULL,
+  offline_add_cash_status_result BLOB,
+  offline_bill_status_result BLOB,
+  offline_cash_out_status_result BLOB,
+  offline_payment_status_result BLOB,
+  offline_transfer_scenario_plan BLOB,
+  old_token TEXT DEFAULT NULL,
+  onboarded INTEGER NOT NULL,
+  onboarding_content BLOB DEFAULT NULL,
+  order_amount BLOB NOT NULL,
+  ordered_at_millis INTEGER NOT NULL,
+  orientation TEXT NOT NULL
+  orientation TEXT NOT NULL,
+  original_price BLOB NOT NULL,
+  otp_enabled INTEGER NOT NULL
+  outstanding_amount BLOB
+  outstanding_amount BLOB,
+  outstanding_shares INTEGER,
+  outstanding_until INTEGER,
+  owner_token TEXT
+  owner_token TEXT DEFAULT NULL
+  owner_token TEXT NOT NULL
+  owner_token TEXT NOT NULL,
+  page_cursor TEXT,
+  page_index INTEGER NOT NULL DEFAULT 0,
+  paid_out_at INTEGER NOT NULL DEFAULT 0,
+  parent_category_id TEXT NOT NULL,
+  parent_category_id TEXT,
+  parent_category_token TEXT REFERENCES category,
+  parent_category_token TEXT,
+  parent_id TEXT NOT NULL PRIMARY KEY,
+  parent_id TEXT NOT NULL,
+  path TEXT DEFAULT NULL,
+  path TEXT NOT NULL PRIMARY KEY,
+  pay_data BLOB DEFAULT NULL,
+  payload BLOB NOT NULL
+  paymentPersonalToC4b BLOB,
+  paymentSendAsBtc BLOB,
+  paymentSendAsGiftCard BLOB,
+  paymentSendAsStock BLOB,
+  payment_type TEXT DEFAULT NULL,
+  payment_type TEXT NOT NULL UNIQUE
+  pending_verification INTEGER DEFAULT NULL,
+  personal_description TEXT DEFAULT NULL,
+  personal_title TEXT DEFAULT NULL,
+  personalization BLOB DEFAULT NULL,
+  personalizedAdsToggle BLOB
+  personalizedAdsToggle BLOB,
+  phone_number TEXT DEFAULT NULL,
+  phone_number TEXT NOT NULL PRIMARY KEY
+  photo BLOB DEFAULT NULL,
+  photo_url TEXT,
+  physical_card BLOB
+  physical_card BLOB,
+  physical_issued_cards_enabled INTEGER DEFAULT NULL,
+  picture BLOB,
+  placeholderSection BLOB,
+  placement TEXT
+  placement TEXT NOT NULL,
+  placement TEXT,
+  points_earned INTEGER NOT NULL
+  points_earned INTEGER NOT NULL DEFAULT 0,
+  points_earned INTEGER NOT NULL,
+  points_required INTEGER NOT NULL,
+  poolsOnboardingVisibility BLOB
+  position INTEGER DEFAULT -1,
+  position INTEGER NOT NULL,
+  potential_future_borrower INTEGER NOT NULL
+  precise_enabled INTEGER DEFAULT NULL,
+  prefix_icon TEXT,
+  presentation_mode TEXT,
+  preview_message TEXT DEFAULT NULL,
+  preview_message_by_country BLOB DEFAULT NULL,
+  preview_url TEXT,
+  price BLOB NOT NULL
+  primaryAction BLOB,
+  primaryActionColor BLOB,
+  primaryColor INTEGER,
+  primaryNavigationAction BLOB,
+  primary_key TEXT PRIMARY KEY,
+  primary_text TEXT NOT NULL,
+  principal_amount BLOB NOT NULL,
+  printable_cashtag_qr_image_url TEXT DEFAULT NULL,
+  priority INTEGER NOT NULL DEFAULT 0
+  priority INTEGER NOT NULL DEFAULT 1
+  priority INTEGER NOT NULL DEFAULT 1,
+  priority INTEGER,
+  privacy_policy_url TEXT DEFAULT NULL,
+  processor_version INTEGER NOT NULL,
+  profileCurrency TEXT NOT NULL,
+  profileImage BLOB,
+  profile_button_text TEXT DEFAULT NULL,
+  profile_id TEXT NOT NULL PRIMARY KEY REFERENCES profile ON DELETE CASCADE,
+  profile_id TEXT NOT NULL PRIMARY KEY REFERENCES profile,
+  profile_id TEXT NOT NULL PRIMARY KEY,
+  profile_id TEXT NOT NULL REFERENCES profile
+  profile_id TEXT NOT NULL REFERENCES profile ON DELETE CASCADE,
+  profile_id TEXT NOT NULL REFERENCES profile,
+  profile_row_subtitle TEXT DEFAULT NULL,
+  profile_row_title TEXT DEFAULT NULL,
+  profile_token TEXT DEFAULT NULL
+  profile_token TEXT DEFAULT NULL,
+  program_detail_rows BLOB,
+  program_details TEXT,
+  program_id TEXT PRIMARY KEY,
+  program_rewards BLOB NOT NULL,
+  promo BLOB,
+  promotionDetails BLOB NOT NULL
+  provider TEXT NOT NULL,
+  provider_avatar BLOB NOT NULL,
+  published_at_millis INTEGER NOT NULL
+  published_at_millis INTEGER NOT NULL,
+  published_at_millis INTEGER,
+  purchase_limit BLOB,
+  quick_amounts BLOB,
+  quote_currency_code TEXT NOT NULL,
+  range BLOB
+  range BLOB UNIQUE
+  range BLOB UNIQUE,
+  range TEXT NOT NULL,
+  range TEXT PRIMARY KEY NOT NULL,
+  rank INTEGER,
+  rate_limited_time INTEGER DEFAULT NULL,
+  rate_plan TEXT NOT NULL,
+  rate_plan TEXT,
+  rates BLOB NOT NULL,
+  reaction TEXT NOT NULL
+  reaction TEXT NOT NULL,
+  reaction_removed_in_session INTEGER NOT NULL DEFAULT 0
+  ready_for_removal INTEGER DEFAULT NULL
+  ready_for_removal INTEGER DEFAULT NULL,
+  recipient_amount BLOB,
+  recipient_id TEXT NOT NULL,
+  recipients INTEGER NOT NULL DEFAULT 1,
+  recommendation BLOB NOT NULL
+  recorded_at INTEGER NOT NULL,
+  recurring_deposits_dda_upsell BLOB DEFAULT NULL
+  redeemable_with_cash_app_pay INTEGER NOT NULL DEFAULT 0,
+  redeemable_with_cash_card INTEGER NOT NULL DEFAULT 0,
+  referral_status_screen BLOB
+  refunded_at INTEGER NOT NULL DEFAULT 0,
+  region TEXT
+  region TEXT,
+  registered_at INTEGER NOT NULL,
+  release_stage TEXT DEFAULT NULL
+  release_state TEXT NOT NULL DEFAULT 'RELEASE_STATE_UNSPECIFIED',
+  remittanceSend BLOB
+  remittanceSend BLOB,
+  renderSectionDivider INTEGER DEFAULT NULL
+  render_data TEXT,
+  render_json TEXT NOT NULL
+  render_style TEXT
+  render_style TEXT,
+  rendering_behavior TEXT
+  rendering_info BLOB DEFAULT NULL,
+  request BLOB NOT NULL
+  request BLOB NOT NULL,
+  request_data BLOB DEFAULT NULL,
+  request_minimum_note_length INTEGER NOT NULL DEFAULT 0,
+  require_minimum_initiator_notes_length_for_requests INTEGER NOT NULL DEFAULT 0,
+  require_minimum_initiator_notes_length_for_requests INTEGER,
+  require_passcode_confirmation INTEGER NOT NULL DEFAULT 0
+  require_passcode_confirmation INTEGER NOT NULL,
+  response BLOB DEFAULT NULL
+  response BLOB NOT NULL
+  retry_at INTEGER NOT NULL,
+  retry_count INTEGER NOT NULL DEFAULT 0,
+  retry_intervals BLOB
+  retry_intervals BLOB,
+  reward_button_priority INTEGER NOT NULL,
+  reward_button_text TEXT,
+  reward_code TEXT DEFAULT NULL,
+  reward_code_url TEXT DEFAULT NULL,
+  reward_header_text TEXT,
+  reward_main_text TEXT,
+  reward_payment_amount BLOB NOT NULL,
+  reward_screen_enabled INTEGER NOT NULL,
+  reward_selection BLOB NOT NULL
+  reward_selection_state BLOB
+  reward_selection_state BLOB,
+  reward_tiers BLOB NOT NULL,
+  reward_token TEXT NOT NULL REFERENCES reward(token)
+  reward_token TEXT NOT NULL REFERENCES reward(token),
+  reward_token TEXT NOT NULL,
+  role TEXT,
+  rollup_type TEXT DEFAULT NULL,
+  routing_number TEXT NOT NULL,
+  row_id INTEGER PRIMARY KEY NOT NULL,
+  row_id INTEGER,
+  saved_at_millis INTEGER NOT NULL
+  savings_home BLOB NOT NULL
+  scenario_plan BLOB NOT NULL
+  scene_index INTEGER NOT NULL,
+  schedule BLOB NOT NULL,
+  schedule BLOB,
+  schedule_display_label TEXT
+  scheduled_for INTEGER DEFAULT NULL,
+  scheduled_fulfillment BLOB,
+  scheduled_payment_token TEXT DEFAULT NULL,
+  scheduled_reload_data BLOB DEFAULT NULL,
+  scheduled_reload_enabled INTEGER NOT NULL DEFAULT 0,
+  screen_json TEXT NOT NULL
+  script_url TEXT DEFAULT NULL,
+  search_ordering INTEGER DEFAULT NULL,
+  search_text TEXT PRIMARY KEY COLLATE NOCASE,
+  search_url TEXT DEFAULT NULL,
+  secondaryAction BLOB,
+  secondaryActionColor BLOB
+  secondaryActionColor BLOB,
+  secondaryNavigationAction BLOB
+  secondaryNavigationAction BLOB,
+  secondary_text TEXT,
+  sectionId INTEGER NOT NULL REFERENCES productsResultsSection(id),
+  section_id INTEGER NOT NULL REFERENCES profileDirectorySection ON DELETE CASCADE
+  section_id INTEGER NOT NULL REFERENCES profileDirectorySection ON DELETE CASCADE,
+  sections BLOB
+  sections BLOB NOT NULL
+  selected_reward_token TEXT REFERENCES selectedReward(token)
+  selected_reward_token TEXT REFERENCES selected_reward(token)
+  selection_icon_url TEXT
+  selection_icon_url TEXT,
+  selection_screen_title TEXT DEFAULT NULL
+  sell_limit BLOB,
+  sender_amount BLOB,
+  sender_id TEXT NOT NULL,
+  serverId TEXT DEFAULT NULL,
+  server_flow_token TEXT NOT NULL,
+  session_id TEXT DEFAULT NULL,
+  session_status INTEGER,
+  session_token TEXT,
+  settings BLOB
+  settingsInvestTrustedContactApp BLOB
+  settingsInvestTrustedContactApp BLOB,
+  settingsTaxPasswordAuthApp BLOB,
+  setup_fee_amount BLOB,
+  setup_fee_bps INTEGER NOT NULL
+  setup_fee_bps INTEGER NOT NULL,
+  sha256_hex TEXT NOT NULL,
+  share_text TEXT DEFAULT NULL
+  share_text TEXT DEFAULT NULL,
+  shares REAL NOT NULL,
+  sheet_key BLOB NOT NULL PRIMARY KEY,
+  sheet_response BLOB NOT NULL
+  shop_browse_response BLOB NOT NULL
+  shop_category_browse_response BLOB NOT NULL
+  shop_info_response BLOB NOT NULL
+  short_invite_friends_cta TEXT DEFAULT NULL
+  shouldBadgeActivity INTEGER DEFAULT NULL
+  show_boost_video INTEGER NOT NULL DEFAULT 0,
+  show_in_instrument_selector INTEGER NOT NULL DEFAULT 0
+  show_rewards INTEGER DEFAULT 0
+  show_rewards INTEGER NOT NULL DEFAULT 0
+  show_rewards INTEGER NOT NULL DEFAULT 0,
+  side TEXT NOT NULL,
+  signin_group_id INTEGER NOT NULL
+  signin_group_id INTEGER NOT NULL,
+  size_bytes INTEGER NOT NULL,
+  skip_loan_amount_selection INTEGER,
+  slug TEXT NOT NULL,
+  sms TEXT,
+  sortOrder INTEGER NOT NULL,
+  sort_order INTEGER
+  source_currency TEXT NOT NULL
+  source_type TEXT NOT NULL,
+  sponsor BLOB
+  sponsorEligible BLOB
+  sponsorEligible BLOB,
+  stamps BLOB
+  stamps BLOB DEFAULT NULL,
+  stamps BLOB NOT NULL,
+  stamps_url TEXT,
+  stamps_version INTEGER
+  standalone_invite_friends_cta TEXT DEFAULT NULL,
+  stars_earned INTEGER NOT NULL,
+  stars_per_reward INTEGER NOT NULL,
+  state TEXT NOT NULL
+  state TEXT NOT NULL,
+  state TEXT,
+  statementCoverage BLOB
+  statement_token TEXT NOT NULL PRIMARY KEY,
+  statement_type TEXT NOT NULL,
+  statement_url TEXT,
+  status TEXT NOT NULL
+  status TEXT NOT NULL,
+  status_data BLOB,
+  status_icon TEXT,
+  storage_link_id INTEGER,
+  stored_at INTEGER NOT NULL DEFAULT 0,
+  stored_at INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP
+  stored_at INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  storyId TEXT NOT NULL REFERENCES education_story ON DELETE CASCADE
+  street_address_line_1 Text NOT NULL,
+  street_address_line_2 Text,
+  subfilters BLOB,
+  subtitle BLOB,
+  subtitle TEXT
+  subtitle TEXT,
+  succeeded INTEGER NOT NULL DEFAULT 0,
+  success BLOB DEFAULT NULL,
+  suffix TEXT,
+  suggestions BLOB NOT NULL,
+  support_node_token TEXT DEFAULT NULL
+  supported_card_themes BLOB,
+  svg_data TEXT,
+  symbol TEXT NOT NULL PRIMARY KEY,
+  symbol TEXT NOT NULL,
+  sync_entity_id TEXT
+  sync_entity_version INTEGER DEFAULT NULL,
+  sync_range BLOB UNIQUE NOT NULL
+  sync_state TEXT,
+  sync_token TEXT DEFAULT NULL
+  sync_token TEXT DEFAULT NULL,
+  sync_value_type INTEGER DEFAULT NULL,
+  tab_content BLOB DEFAULT NULL,
+  tags BLOB,
+  tapAction BLOB,
+  tapToPay BLOB
+  tapToPay BLOB,
+  target_account_token TEXT,
+  target_balance_amount BLOB DEFAULT NULL
+  target_bps INTEGER NOT NULL,
+  target_currency TEXT NOT NULL,
+  target_price BLOB NOT NULL,
+  target_type TEXT NOT NULL
+  terms_of_service_url TEXT DEFAULT NULL
+  text TEXT NOT NULL,
+  text TEXT,
+  their_id TEXT NOT NULL,
+  theme TEXT,
+  themed_accent_color BLOB DEFAULT NULL
+  themed_accent_color BLOB DEFAULT NULL,
+  threaded_customer_id TEXT,
+  thumbnail TEXT,
+  tile BLOB NOT NULL
+  tileSection BLOB,
+  tile_type TEXT NOT NULL
+  tiles BLOB DEFAULT NULL,
+  timestamp INTEGER NOT NULL,
+  timestamp_millis INTEGER NOT NULL DEFAULT 0,
+  timestamp_ms INTEGER NOT NULL,
+  title BLOB,
+  title TEXT NOT NULL
+  title TEXT NOT NULL,
+  title TEXT,
+  toggle BLOB
+  toggle BLOB,
+  token TEXT
+  token TEXT DEFAULT NULL,
+  token TEXT NOT NULL PRIMARY KEY,
+  token TEXT NOT NULL UNIQUE
+  token TEXT NOT NULL UNIQUE,
+  token TEXT NOT NULL,
+  token TEXT PRIMARY KEY
+  token TEXT PRIMARY KEY NOT NULL,
+  token TEXT PRIMARY KEY,
+  tooltip BLOB
+  tooltip BLOB,
+  top_level_feed_payment_type_deny_list BLOB DEFAULT NULL,
+  topic INTEGER NOT NULL DEFAULT -1
+  topic INTEGER NOT NULL DEFAULT -1,
+  topic INTEGER NOT NULL,
+  touch_data BLOB DEFAULT NULL,
+  touch_data BLOB,
+  trade_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  trade_time INTEGER NOT NULL
+  transaction_token TEXT NOT NULL,
+  transaction_token TEXT UNIQUE NOT NULL,
+  transaction_type TEXT DEFAULT NULL
+  trouble_scanning_url TEXT DEFAULT NULL,
+  trusted_contact_enabled INTEGER NOT NULL DEFAULT 0,
+  ttl_in_millis INTEGER NOT NULL,
+  ttl_in_millis INTEGER,
+  tutorial_data BLOB,
+  type INTEGER NOT NULL,
+  type TEXT DEFAULT NULL,
+  type TEXT NOT NULL
+  type TEXT NOT NULL DEFAULT 'AP_STORE',
+  type TEXT NOT NULL DEFAULT 'BUSINESS'
+  type TEXT NOT NULL,
+  type TEXT,
+  ui_automation BLOB NOT NULL
+  ui_order INTEGER NOT NULL DEFAULT 0
+  units TEXT NOT NULL,
+  unlock_borrow_data BLOB,
+  unread INTEGER NOT NULL
+  unread INTEGER NOT NULL,
+  upcoming_bills BLOB DEFAULT NULL
+  updated_at INTEGER DEFAULT NULL,
+  updated_at INTEGER NOT NULL
+  updated_at INTEGER NOT NULL DEFAULT 0,
+  updated_at INTEGER NOT NULL,
+  updated_at INTEGER,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+  updated_at_millis INTEGER NOT NULL,
+  url TEXT DEFAULT NULL
+  url TEXT DEFAULT NULL,
+  url TEXT NOT NULL
+  url TEXT NOT NULL,
+  url TEXT,
+  user_agent TEXT,
+  user_id INTEGER NOT NULL PRIMARY KEY DEFAULT 1,
+  value_type INTEGER,
+  verification_instrument_token TEXT,
+  verified INTEGER NOT NULL,
+  version INTEGER NOT NULL,
+  version TEXT
+  version_data BLOB
+  version_data BLOB,
+  version_ranges TEXT NOT NULL,
+  video BLOB,
+  wallet BLOB
+  wallet_address TEXT
+  wallet_address TEXT,
+  welcome_amount BLOB DEFAULT NULL,
+  whats_new BLOB,
+  white_signature BLOB,
+  ytd_total_saving BLOB DEFAULT NULL
+  zip TEXT NOT NULL,
+)
+);
+-- Used to identify the page, used in composite primary key. \
+CREATE TABLE  sync_value_instrument (
+CREATE TABLE EquityAccount (
+CREATE TABLE IF NOT EXISTS `Dependency` (`work_spec_id` TEXT NOT NULL, `prerequisite_id` TEXT NOT NULL, PRIMARY KEY(`work_spec_id`, `prerequisite_id`), FOREIGN KEY(`work_spec_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`prerequisite_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )
+CREATE TABLE IF NOT EXISTS `Preference` (`key` TEXT NOT NULL, `long_value` INTEGER, PRIMARY KEY(`key`))
+CREATE TABLE IF NOT EXISTS `SystemIdInfo` (`work_spec_id` TEXT NOT NULL, `generation` INTEGER NOT NULL DEFAULT 0, `system_id` INTEGER NOT NULL, PRIMARY KEY(`work_spec_id`, `generation`), FOREIGN KEY(`work_spec_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )
+CREATE TABLE IF NOT EXISTS `WorkName` (`name` TEXT NOT NULL, `work_spec_id` TEXT NOT NULL, PRIMARY KEY(`name`, `work_spec_id`), FOREIGN KEY(`work_spec_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )
+CREATE TABLE IF NOT EXISTS `WorkProgress` (`work_spec_id` TEXT NOT NULL, `progress` BLOB NOT NULL, PRIMARY KEY(`work_spec_id`), FOREIGN KEY(`work_spec_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )
+CREATE TABLE IF NOT EXISTS `WorkSpec` (`id` TEXT NOT NULL, `state` INTEGER NOT NULL, `worker_class_name` TEXT NOT NULL, `input_merger_class_name` TEXT NOT NULL, `input` BLOB NOT NULL, `output` BLOB NOT NULL, `initial_delay` INTEGER NOT NULL, `interval_duration` INTEGER NOT NULL, `flex_duration` INTEGER NOT NULL, `run_attempt_count` INTEGER NOT NULL, `backoff_policy` INTEGER NOT NULL, `backoff_delay_duration` INTEGER NOT NULL, `last_enqueue_time` INTEGER NOT NULL DEFAULT -1, `minimum_retention_duration` INTEGER NOT NULL, `schedule_requested_at` INTEGER NOT NULL, `run_in_foreground` INTEGER NOT NULL, `out_of_quota_policy` INTEGER NOT NULL, `period_count` INTEGER NOT NULL DEFAULT 0, `generation` INTEGER NOT NULL DEFAULT 0, `next_schedule_time_override` INTEGER NOT NULL DEFAULT 9223372036854775807, `next_schedule_time_override_generation` INTEGER NOT NULL DEFAULT 0, `stop_reason` INTEGER NOT NULL DEFAULT -256, `trace_tag` TEXT, `backoff_on_system_interruptions` INTEGER, `required_network_type` INTEGER NOT NULL, `required_network_request` BLOB NOT NULL DEFAULT x'', `requires_charging` INTEGER NOT NULL, `requires_device_idle` INTEGER NOT NULL, `requires_battery_not_low` INTEGER NOT NULL, `requires_storage_not_low` INTEGER NOT NULL, `trigger_content_update_delay` INTEGER NOT NULL, `trigger_max_content_delay` INTEGER NOT NULL, `content_uri_triggers` BLOB NOT NULL, PRIMARY KEY(`id`))
+CREATE TABLE IF NOT EXISTS `WorkTag` (`tag` TEXT NOT NULL, `work_spec_id` TEXT NOT NULL, PRIMARY KEY(`tag`, `work_spec_id`), FOREIGN KEY(`work_spec_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )
+CREATE TABLE IF NOT EXISTS `_new_SystemIdInfo` (
+CREATE TABLE IF NOT EXISTS `_new_WorkSpec` (
+CREATE TABLE IF NOT EXISTS `_new_WorkSpec` (`id` TEXT NOT NULL, `state` INTEGER NOT NULL, `worker_class_name` TEXT NOT NULL, `input_merger_class_name` TEXT NOT NULL, `input` BLOB NOT NULL, `output` BLOB NOT NULL, `initial_delay` INTEGER NOT NULL, `interval_duration` INTEGER NOT NULL, `flex_duration` INTEGER NOT NULL, `run_attempt_count` INTEGER NOT NULL, `backoff_policy` INTEGER NOT NULL, `backoff_delay_duration` INTEGER NOT NULL, `last_enqueue_time` INTEGER NOT NULL DEFAULT -1, `minimum_retention_duration` INTEGER NOT NULL, `schedule_requested_at` INTEGER NOT NULL, `run_in_foreground` INTEGER NOT NULL, `out_of_quota_policy` INTEGER NOT NULL, `period_count` INTEGER NOT NULL DEFAULT 0, `generation` INTEGER NOT NULL DEFAULT 0, `next_schedule_time_override` INTEGER NOT NULL DEFAULT 9223372036854775807, `next_schedule_time_override_generation` INTEGER NOT NULL DEFAULT 0, `stop_reason` INTEGER NOT NULL DEFAULT -256, `required_network_type` INTEGER NOT NULL, `requires_charging` INTEGER NOT NULL, `requires_device_idle` INTEGER NOT NULL, `requires_battery_not_low` INTEGER NOT NULL, `requires_storage_not_low` INTEGER NOT NULL, `trigger_content_update_delay` INTEGER NOT NULL, `trigger_max_content_delay` INTEGER NOT NULL, `content_uri_triggers` BLOB NOT NULL, PRIMARY KEY(`id`))
+CREATE TABLE IF NOT EXISTS `_new_WorkSpec` (`id` TEXT NOT NULL, `state` INTEGER NOT NULL, `worker_class_name` TEXT NOT NULL, `input_merger_class_name` TEXT NOT NULL, `input` BLOB NOT NULL, `output` BLOB NOT NULL, `initial_delay` INTEGER NOT NULL, `interval_duration` INTEGER NOT NULL, `flex_duration` INTEGER NOT NULL, `run_attempt_count` INTEGER NOT NULL, `backoff_policy` INTEGER NOT NULL, `backoff_delay_duration` INTEGER NOT NULL, `last_enqueue_time` INTEGER NOT NULL, `minimum_retention_duration` INTEGER NOT NULL, `schedule_requested_at` INTEGER NOT NULL, `run_in_foreground` INTEGER NOT NULL, `out_of_quota_policy` INTEGER NOT NULL, `period_count` INTEGER NOT NULL DEFAULT 0, `generation` INTEGER NOT NULL DEFAULT 0, `required_network_type` INTEGER NOT NULL, `requires_charging` INTEGER NOT NULL, `requires_device_idle` INTEGER NOT NULL, `requires_battery_not_low` INTEGER NOT NULL, `requires_storage_not_low` INTEGER NOT NULL, `trigger_content_update_delay` INTEGER NOT NULL, `trigger_max_content_delay` INTEGER NOT NULL, `content_uri_triggers` BLOB NOT NULL, PRIMARY KEY(`id`))
+CREATE TABLE IF NOT EXISTS `_new_WorkSpec` (`id` TEXT NOT NULL, `state` INTEGER NOT NULL, `worker_class_name` TEXT NOT NULL, `input_merger_class_name` TEXT, `input` BLOB NOT NULL, `output` BLOB NOT NULL, `initial_delay` INTEGER NOT NULL, `interval_duration` INTEGER NOT NULL, `flex_duration` INTEGER NOT NULL, `run_attempt_count` INTEGER NOT NULL, `backoff_policy` INTEGER NOT NULL, `backoff_delay_duration` INTEGER NOT NULL, `last_enqueue_time` INTEGER NOT NULL, `minimum_retention_duration` INTEGER NOT NULL, `schedule_requested_at` INTEGER NOT NULL, `run_in_foreground` INTEGER NOT NULL, `out_of_quota_policy` INTEGER NOT NULL, `period_count` INTEGER NOT NULL DEFAULT 0, `required_network_type` INTEGER NOT NULL, `requires_charging` INTEGER NOT NULL, `requires_device_idle` INTEGER NOT NULL, `requires_battery_not_low` INTEGER NOT NULL, `requires_storage_not_low` INTEGER NOT NULL, `trigger_content_update_delay` INTEGER NOT NULL, `trigger_max_content_delay` INTEGER NOT NULL, `content_uri_triggers` BLOB NOT NULL, PRIMARY KEY(`id`))
+CREATE TABLE IF NOT EXISTS `_new_WorkSpec` (`id` TEXT NOT NULL, `state` INTEGER NOT NULL, `worker_class_name` TEXT NOT NULL, `input_merger_class_name` TEXT, `input` BLOB NOT NULL, `output` BLOB NOT NULL, `initial_delay` INTEGER NOT NULL, `interval_duration` INTEGER NOT NULL, `flex_duration` INTEGER NOT NULL, `run_attempt_count` INTEGER NOT NULL, `backoff_policy` INTEGER NOT NULL, `backoff_delay_duration` INTEGER NOT NULL, `period_start_time` INTEGER NOT NULL, `minimum_retention_duration` INTEGER NOT NULL, `schedule_requested_at` INTEGER NOT NULL, `run_in_foreground` INTEGER NOT NULL, `out_of_quota_policy` INTEGER NOT NULL, `required_network_type` INTEGER NOT NULL, `requires_charging` INTEGER NOT NULL, `requires_device_idle` INTEGER NOT NULL, `requires_battery_not_low` INTEGER NOT NULL, `requires_storage_not_low` INTEGER NOT NULL, `trigger_content_update_delay` INTEGER NOT NULL, `trigger_max_content_delay` INTEGER NOT NULL, `content_uri_triggers` BLOB NOT NULL, PRIMARY KEY(`id`))
+CREATE TABLE IF NOT EXISTS `workflow_analytics` (`workflow_id` TEXT NOT NULL, `id` TEXT NOT NULL, `analytics_model` BLOB NOT NULL, PRIMARY KEY(`workflow_id`, `id`))
+CREATE TABLE IF NOT EXISTS `workflow_local_key_values` (`pane_id` TEXT NOT NULL, `key` TEXT NOT NULL, `string` TEXT, `byte_array` BLOB, PRIMARY KEY(`pane_id`, `key`))
+CREATE TABLE IF NOT EXISTS `workflow_pane` (`workflow_id` TEXT NOT NULL, `id` TEXT NOT NULL, `model` BLOB NOT NULL, PRIMARY KEY(`workflow_id`, `id`))
+CREATE TABLE IF NOT EXISTS accepted_language_disclosure (
+CREATE TABLE IF NOT EXISTS afterpayAppletMerchantSheet(
+CREATE TABLE IF NOT EXISTS app2 ( app_id TEXT NOT NULL, first_open_count INTEGER NOT NULL, PRIMARY KEY (app_id));
+CREATE TABLE IF NOT EXISTS apps ( app_id TEXT NOT NULL, app_instance_id TEXT, gmp_app_id TEXT, resettable_device_id_hash TEXT, last_bundle_index INTEGER NOT NULL, last_bundle_end_timestamp INTEGER NOT NULL, PRIMARY KEY (app_id)) ;
+CREATE TABLE IF NOT EXISTS atmWithdrawalAddressSearch(
+CREATE TABLE IF NOT EXISTS audience_filter_values ( app_id TEXT NOT NULL, audience_id INTEGER NOT NULL, current_results BLOB, PRIMARY KEY (app_id, audience_id));
+CREATE TABLE IF NOT EXISTS authenticatorInfo (
+CREATE TABLE IF NOT EXISTS bills (
+CREATE TABLE IF NOT EXISTS billsData (
+CREATE TABLE IF NOT EXISTS cardMessage(
+CREATE TABLE IF NOT EXISTS category (
+CREATE TABLE IF NOT EXISTS category_in_filter_group(
+CREATE TABLE IF NOT EXISTS clientRoutingConfig (
+CREATE TABLE IF NOT EXISTS component_migration (
+CREATE TABLE IF NOT EXISTS conditional_properties ( app_id TEXT NOT NULL, origin TEXT NOT NULL, name TEXT NOT NULL, value BLOB NOT NULL, creation_timestamp INTEGER NOT NULL, active INTEGER NOT NULL, trigger_event_name TEXT, trigger_timeout INTEGER NOT NULL, timed_out_event BLOB,triggered_event BLOB, triggered_timestamp INTEGER NOT NULL, time_to_live INTEGER NOT NULL, expired_event BLOB, PRIMARY KEY (app_id, name)) ;
+CREATE TABLE IF NOT EXISTS consent_settings ( app_id TEXT NOT NULL, consent_state TEXT NOT NULL, PRIMARY KEY (app_id));
+CREATE TABLE IF NOT EXISTS creditHubApplet(
+CREATE TABLE IF NOT EXISTS creditHubEntryPoint(
+CREATE TABLE IF NOT EXISTS default_event_params ( app_id TEXT NOT NULL, parameters BLOB NOT NULL, PRIMARY KEY (app_id));
+CREATE TABLE IF NOT EXISTS education_story (
+CREATE TABLE IF NOT EXISTS education_story_scene_data (
+CREATE TABLE IF NOT EXISTS entity_in_category(
+CREATE TABLE IF NOT EXISTS entity_lookup (
+CREATE TABLE IF NOT EXISTS event_filters ( app_id TEXT NOT NULL, audience_id INTEGER NOT NULL, filter_id INTEGER NOT NULL, event_name TEXT NOT NULL, data BLOB NOT NULL, PRIMARY KEY (app_id, event_name, audience_id, filter_id));
+CREATE TABLE IF NOT EXISTS events ( app_id TEXT NOT NULL, name TEXT NOT NULL, lifetime_count INTEGER NOT NULL, current_bundle_count INTEGER NOT NULL, last_fire_timestamp INTEGER NOT NULL, PRIMARY KEY (app_id, name)) ;
+CREATE TABLE IF NOT EXISTS events_snapshot ( app_id TEXT NOT NULL, name TEXT NOT NULL, lifetime_count INTEGER NOT NULL, current_bundle_count INTEGER NOT NULL, last_fire_timestamp INTEGER NOT NULL, last_bundled_timestamp INTEGER, last_bundled_day INTEGER, last_sampled_complex_event_id INTEGER, last_sampling_rate INTEGER, last_exempt_from_sampling INTEGER, current_session_count INTEGER, PRIMARY KEY (app_id, name)) ;
+CREATE TABLE IF NOT EXISTS favorites (
+CREATE TABLE IF NOT EXISTS filter_for_category(
+CREATE TABLE IF NOT EXISTS filter_group (
+CREATE TABLE IF NOT EXISTS globalBorrowData(
+CREATE TABLE IF NOT EXISTS globalConfig (
+CREATE TABLE IF NOT EXISTS inlineMessageV2(
+CREATE TABLE IF NOT EXISTS lastSeenSavingsBalance(
+CREATE TABLE IF NOT EXISTS limitsPagelet(
+CREATE TABLE IF NOT EXISTS main_event_params ( app_id TEXT NOT NULL, event_id TEXT NOT NULL, children_to_process INTEGER NOT NULL, main_event BLOB NOT NULL, PRIMARY KEY (app_id));
+CREATE TABLE IF NOT EXISTS marketCapabilitiesConfig (
+CREATE TABLE IF NOT EXISTS no_data_mode_events ( app_id TEXT NOT NULL, name TEXT NOT NULL, data BLOB NOT NULL, timestamp_millis INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS offersCollectionDetail(
+CREATE TABLE IF NOT EXISTS offersFilterGroupsSection(
+CREATE TABLE IF NOT EXISTS offersHome(
+CREATE TABLE IF NOT EXISTS offersRecentlyViewed(
+CREATE TABLE IF NOT EXISTS offersSearch(
+CREATE TABLE IF NOT EXISTS offersSheet(
+CREATE TABLE IF NOT EXISTS paperDepositBarcodeInfo (
+CREATE TABLE IF NOT EXISTS personalizePaymentBackgroundConfig (
+CREATE TABLE IF NOT EXISTS personalizePaymentStickerConfig(
+CREATE TABLE IF NOT EXISTS physicalDepositUsAddressSearch (
+CREATE TABLE IF NOT EXISTS productsResultsItem(
+CREATE TABLE IF NOT EXISTS productsResultsPaginationToken(
+CREATE TABLE IF NOT EXISTS productsResultsSection(
+CREATE TABLE IF NOT EXISTS profileDirectoryConfig (
+CREATE TABLE IF NOT EXISTS profileDirectoryItem (
+CREATE TABLE IF NOT EXISTS profileDirectorySection (
+CREATE TABLE IF NOT EXISTS property_filters ( app_id TEXT NOT NULL, audience_id INTEGER NOT NULL, filter_id INTEGER NOT NULL, property_name TEXT NOT NULL, data BLOB NOT NULL, PRIMARY KEY (app_id, property_name, audience_id, filter_id));
+CREATE TABLE IF NOT EXISTS queue ( app_id TEXT NOT NULL, bundle_end_timestamp INTEGER NOT NULL, data BLOB NOT NULL);
+CREATE TABLE IF NOT EXISTS raw_events ( app_id TEXT NOT NULL, name TEXT NOT NULL, timestamp INTEGER NOT NULL, metadata_fingerprint INTEGER NOT NULL, data BLOB NOT NULL);
+CREATE TABLE IF NOT EXISTS raw_events_metadata ( app_id TEXT NOT NULL, metadata_fingerprint INTEGER NOT NULL, metadata BLOB NOT NULL, PRIMARY KEY (app_id, metadata_fingerprint));
+CREATE TABLE IF NOT EXISTS reward (
+CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)
+CREATE TABLE IF NOT EXISTS savingsGoalLocalStatus(
+CREATE TABLE IF NOT EXISTS shopBrowseCategoryDetails(
+CREATE TABLE IF NOT EXISTS shopHubBrowseDetails(
+CREATE TABLE IF NOT EXISTS shopInfoDetails(
+CREATE TABLE IF NOT EXISTS shoppingRecentSearches (
+CREATE TABLE IF NOT EXISTS shoppingRecentlyViewed (
+CREATE TABLE IF NOT EXISTS storage_link (
+CREATE TABLE IF NOT EXISTS sync_entity (
+CREATE TABLE IF NOT EXISTS sync_range (
+CREATE TABLE IF NOT EXISTS threadsReactionConfig (
+CREATE TABLE IF NOT EXISTS trigger_uris ( app_id TEXT NOT NULL, trigger_uri TEXT NOT NULL, timestamp_millis INTEGER NOT NULL, source INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS unhandled_sync_entity (
+CREATE TABLE IF NOT EXISTS upcomingBills (
+CREATE TABLE IF NOT EXISTS upload_queue ( app_id TEXT NOT NULL, upload_uri TEXT NOT NULL, upload_headers TEXT NOT NULL, upload_type INTEGER NOT NULL, measurement_batch BLOB NOT NULL, retry_count INTEGER NOT NULL, creation_timestamp INTEGER NOT NULL );
+CREATE TABLE IF NOT EXISTS user_attributes ( app_id TEXT NOT NULL, name TEXT NOT NULL, set_timestamp INTEGER NOT NULL, value BLOB NOT NULL, PRIMARY KEY (app_id, name)) ;
+CREATE TABLE LegalDocument(
+CREATE TABLE Stock (
+CREATE TABLE Trade (
+CREATE TABLE accepted_language_disclosure (
+CREATE TABLE accessSettings(
+CREATE TABLE activeRewardOverride (
+CREATE TABLE activeRewardOverride(
+CREATE TABLE active_storage_link (
+CREATE TABLE activityInlineMessage(
+CREATE TABLE afterpayApplet (
+CREATE TABLE afterpayAppletMerchantSheet (
+CREATE TABLE afterpayRecentlyViewedMerchant (
+CREATE TABLE alias (
+CREATE TABLE analyticsMessage(
+CREATE TABLE analytics_message(
+CREATE TABLE atmWithdrawalAddressSearch (
+CREATE TABLE audit_log_entry (
+CREATE TABLE authenticatorInfo (
+CREATE TABLE availableAccountStatement (
+CREATE TABLE badge (
+CREATE TABLE badgeCount (
+CREATE TABLE badgeGroup (
+CREATE TABLE balanceData (
+CREATE TABLE balance_data (
+CREATE TABLE balance_snapshot(
+CREATE TABLE bankingConfig (
+CREATE TABLE bankingTab (
+CREATE TABLE bankingTab(
+CREATE TABLE banking_transaction_customer_ids(
+CREATE TABLE bitcoinMapAddressSearch (
+CREATE TABLE bitcoinTransactionCustomerIds (
+CREATE TABLE bitcoin_transaction_customer_ids (
+CREATE TABLE blockersConfig (
+CREATE TABLE boostConfig (
+CREATE TABLE borrowAppletTile(
+CREATE TABLE borrowAppletVerticalLayout(
+CREATE TABLE borrowConfig(
+CREATE TABLE borrowData(
+CREATE TABLE borrowEntryPoint(
+CREATE TABLE bulletinAppMessage (
+CREATE TABLE businessEligibility (
+CREATE TABLE businessGrants(
+CREATE TABLE cardCustomization (
+CREATE TABLE cardDesign (
+CREATE TABLE cardMessage(
+CREATE TABLE cardScheme(
+CREATE TABLE cardStudio (
+CREATE TABLE cardTabHeroState (
+CREATE TABLE cardTabNullStateConfig(
+CREATE TABLE cardTabNullStateScrollConfig(
+CREATE TABLE cardTabNullStateSwipeConfig(
+CREATE TABLE cashDrawerConfig (
+CREATE TABLE cashDrawerData(
+CREATE TABLE cash_house_screen (
+CREATE TABLE category (
+CREATE TABLE category_in_filter_group(
+CREATE TABLE checkDepositConfig (
+CREATE TABLE clientRoutingConfig (
+CREATE TABLE component_migration (
+CREATE TABLE contact (
+CREATE TABLE contact_alias (
+CREATE TABLE contact_detailed_sync_state(
+CREATE TABLE contact_detailed_sync_state_new(
+CREATE TABLE core_customer (
+CREATE TABLE creditLine(
+CREATE TABLE creditLine_new(
+CREATE TABLE crypto_payroll_preference(
+CREATE TABLE crypto_statement(
+CREATE TABLE crypto_wallet (
+CREATE TABLE cryptocurrencyConfig (
+CREATE TABLE cryptocurrency_config (
+CREATE TABLE custom_order (
+CREATE TABLE customer (
+CREATE TABLE customerStatementType (
+CREATE TABLE customer_backup (
+CREATE TABLE dataPrivacySettings(
+CREATE TABLE dependentLastSeenSavingsBalance(
+CREATE TABLE deviceUser (
+CREATE TABLE didvManualCaptureConfig(
+CREATE TABLE directDepositAccount (
+CREATE TABLE direct_deposit_account (
+CREATE TABLE document (
+CREATE TABLE documentCategory (
+CREATE TABLE education_story (
+CREATE TABLE education_story_scene_data (
+CREATE TABLE effective_limits (
+CREATE TABLE entity_in_category(
+CREATE TABLE entity_lookup (
+CREATE TABLE entity_range (
+CREATE TABLE event_metadata (_id INTEGER PRIMARY KEY, event_id INTEGER NOT NULL, name TEXT NOT NULL, value TEXT NOT NULL,FOREIGN KEY (event_id) REFERENCES events(_id) ON DELETE CASCADE)
+CREATE TABLE event_payloads (sequence_num INTEGER NOT NULL, event_id INTEGER NOT NULL, bytes BLOB NOT NULL,FOREIGN KEY (event_id) REFERENCES events(_id) ON DELETE CASCADE,PRIMARY KEY (sequence_num, event_id))
+CREATE TABLE events (_id INTEGER PRIMARY KEY AUTOINCREMENT, data STRING NOT NULL, created_at INTEGER NOT NULL);
+CREATE TABLE events (_id INTEGER PRIMARY KEY, context_id INTEGER NOT NULL, transport_name TEXT NOT NULL, timestamp_ms INTEGER NOT NULL, uptime_ms INTEGER NOT NULL, payload BLOB NOT NULL, code INTEGER, num_attempts INTEGER NOT NULL,FOREIGN KEY (context_id) REFERENCES transport_contexts(_id) ON DELETE CASCADE)
+CREATE TABLE exchange_data(
+CREATE TABLE expressivePaymentsBackgroundConfig (
+CREATE TABLE expressivePaymentsStickerConfig (
+CREATE TABLE extendedProfileDetails(
+CREATE TABLE familyAccount(
+CREATE TABLE family_account(
+CREATE TABLE family_tile(
+CREATE TABLE featureFlags (
+CREATE TABLE feature_flags (
+CREATE TABLE files (
+CREATE TABLE filter_for_category(
+CREATE TABLE filter_group (
+CREATE TABLE fullScreenAdConfig(
+CREATE TABLE fullScreenMessage(
+CREATE TABLE giftCard(
+CREATE TABLE global_log_event_state (last_metrics_upload_ms BIGINT PRIMARY KEY)
+CREATE TABLE gpsConfig(
+CREATE TABLE homeScreenMessage(
+CREATE TABLE inAppNotificationMessage (
+CREATE TABLE inlineMessage(
+CREATE TABLE inlineMessageV2(
+CREATE TABLE institutionsConfig (
+CREATE TABLE instrument (
+CREATE TABLE instrumentLinkingConfig (
+CREATE TABLE instrumentLinkingConfig(
+CREATE TABLE instrumentLinkingOption (
+CREATE TABLE instrument_linking_option (
+CREATE TABLE investing_bitcoin_portfolio_graph_cache(
+CREATE TABLE investing_data (
+CREATE TABLE investing_data(
+CREATE TABLE investing_discovery (
+CREATE TABLE investing_discovery_new (
+CREATE TABLE investing_entity_price_cache(
+CREATE TABLE investing_full_profile(
+CREATE TABLE investing_news_article (
+CREATE TABLE investing_roundups_automation (
+CREATE TABLE investing_roundups_onboarding_flow(
+CREATE TABLE investing_settings (
+CREATE TABLE investing_settings_new (
+CREATE TABLE investing_state(
+CREATE TABLE investing_stocks_portfolio_graph_cache(
+CREATE TABLE investing_suggestions(
+CREATE TABLE investment_entity(
+CREATE TABLE investment_holding(
+CREATE TABLE investment_incentive (
+CREATE TABLE investment_notification_option (
+CREATE TABLE investment_performance(
+CREATE TABLE investment_state(
+CREATE TABLE investment_statement(
+CREATE TABLE invitationConfig (
+CREATE TABLE invitationEntity(
+CREATE TABLE issuedCard (
+CREATE TABLE itemizedReceipt (
+CREATE TABLE lastSeenSavingsBalance(
+CREATE TABLE lendingConfig(
+CREATE TABLE lendingInfo(
+CREATE TABLE lending_transaction_customer_ids(
+CREATE TABLE loan(
+CREATE TABLE loanTransaction(
+CREATE TABLE local_brand_collection (
+CREATE TABLE local_cash_detail_content (
+CREATE TABLE local_cash_detail_content(
+CREATE TABLE local_fulfillment_configuration (
+CREATE TABLE local_market_screen (
+CREATE TABLE local_market_screen(
+CREATE TABLE local_tab_content (
+CREATE TABLE locationConfig (
+CREATE TABLE log_event_dropped (log_source VARCHAR(45) NOT NULL,reason INTEGER NOT NULL,events_dropped_count BIGINT NOT NULL,PRIMARY KEY(log_source, reason))
+CREATE TABLE loyaltyAccount (
+CREATE TABLE loyaltyCustomer (
+CREATE TABLE loyaltyHiddenPaymentTypes (
+CREATE TABLE loyaltyNotificationPreference (
+CREATE TABLE loyaltyProgram (
+CREATE TABLE loyaltyProgram(
+CREATE TABLE loyalty_customer (
+CREATE TABLE loyalty_program (
+CREATE TABLE market_capabilities (
+CREATE TABLE market_capabilities(
+CREATE TABLE messageDelivered (
+CREATE TABLE multiBlockerRequests(
+CREATE TABLE newFullScreenMessage(
+CREATE TABLE newInstrumentLinkingConfig (
+CREATE TABLE new_appMessage (
+CREATE TABLE new_app_message (
+CREATE TABLE new_balanceData (
+CREATE TABLE new_balance_data (
+CREATE TABLE new_creditLine(
+CREATE TABLE new_customer (
+CREATE TABLE new_device_user (
+CREATE TABLE new_entity_config (
+CREATE TABLE new_instrument (
+CREATE TABLE new_instrumentLinkingOption (
+CREATE TABLE new_loan(
+CREATE TABLE new_payment (
+CREATE TABLE new_profile (
+CREATE TABLE new_profileDirectorySection (
+CREATE TABLE new_reward (
+CREATE TABLE new_reward_status (
+CREATE TABLE new_storage_link (
+CREATE TABLE new_sync_entity (
+CREATE TABLE new_tutorials (
+CREATE TABLE new_unhandled_sync_entity (
+CREATE TABLE notificationPreference (
+CREATE TABLE offersCollectionDetail(
+CREATE TABLE offersHome(
+CREATE TABLE offersRecentlyViewed(
+CREATE TABLE offersSearch(
+CREATE TABLE offersSheet(
+CREATE TABLE offlineConfig (
+CREATE TABLE offline_config (
+CREATE TABLE orderedRewardToken (
+CREATE TABLE p2pSettings(
+CREATE TABLE paperDepositBarcodeInfo (
+CREATE TABLE paper_money_deposit_barcode (
+CREATE TABLE passwordInfo (
+CREATE TABLE payment (
+CREATE TABLE paymentHistoryConfig (
+CREATE TABLE pendingPayment (
+CREATE TABLE pendingSplit (
+CREATE TABLE pendingTransfer (
+CREATE TABLE pending_payment (
+CREATE TABLE pending_transfer (
+CREATE TABLE people (_id INTEGER PRIMARY KEY AUTOINCREMENT, data STRING NOT NULL, created_at INTEGER NOT NULL);
+CREATE TABLE physicalDepositUsAddressSearch (
+CREATE TABLE pins (
+CREATE TABLE placeholder(
+CREATE TABLE pointsProgram (
+CREATE TABLE pointsReward (
+CREATE TABLE points_program (
+CREATE TABLE points_reward (
+CREATE TABLE popupMessage(
+CREATE TABLE profile (
+CREATE TABLE profile(
+CREATE TABLE profileAlias (
+CREATE TABLE profileDetails(
+CREATE TABLE profileDirectoryConfig (
+CREATE TABLE promotedAppletTiles (
+CREATE TABLE promotedAppletTiles(
+CREATE TABLE promotionDetails(
+CREATE TABLE ratePlanConfig (
+CREATE TABLE reactionConfig (
+CREATE TABLE recentMoneybotSession(
+CREATE TABLE recipientConfig (
+CREATE TABLE recipientRecommendation(
+CREATE TABLE recurring_preference(
+CREATE TABLE recurring_preference_copy(
+CREATE TABLE referral_customer_ids(
+CREATE TABLE reward (
+CREATE TABLE rewardMerchant(
+CREATE TABLE rewardSelection (
+CREATE TABLE rewardSlot (
+CREATE TABLE rewardStatus (
+CREATE TABLE reward_slot (
+CREATE TABLE rewardsData (
+CREATE TABLE rewardsData_backup (
+CREATE TABLE rewards_data (
+CREATE TABLE savingsConfig(
+CREATE TABLE savingsGoalLocalStatus(
+CREATE TABLE savingsHome(
+CREATE TABLE savingsTaxDocument(
+CREATE TABLE scenarioPlan (
+CREATE TABLE scheduled_payment(
+CREATE TABLE selectableReward (
+CREATE TABLE selectable_reward (
+CREATE TABLE selectedReward (
+CREATE TABLE selected_reward (
+CREATE TABLE session (
+CREATE TABLE sharingConfig (
+CREATE TABLE sheetMessage (
+CREATE TABLE shopBrowseCategoryDetails(
+CREATE TABLE shopHubBrowseDetails(
+CREATE TABLE shopInfoDetails(
+CREATE TABLE shoppingRecentSearches (
+CREATE TABLE shoppingRecentlyViewed (
+CREATE TABLE singleAccountHolderEligibility (
+CREATE TABLE stampsConfig (
+CREATE TABLE stamps_config (
+CREATE TABLE starsProgram (
+CREATE TABLE stars_program (
+CREATE TABLE statementAccount (
+CREATE TABLE status_and_limits (
+CREATE TABLE storage_link (
+CREATE TABLE supportConfig (
+CREATE TABLE supportConfig_backup (
+CREATE TABLE supportConfig_new (
+CREATE TABLE supportFlowEvent (
+CREATE TABLE supportedBorrowLocation(
+CREATE TABLE sync_details (
+CREATE TABLE sync_entity (
+CREATE TABLE sync_entity_temp (
+CREATE TABLE sync_pending_entity (
+CREATE TABLE sync_range (
+CREATE TABLE sync_range_temp (
+CREATE TABLE sync_value_issued_card (
+CREATE TABLE temp_investing_roundups_automation(
+CREATE TABLE threadMessage(
+CREATE TABLE threadMessagePage(
+CREATE TABLE threadMessageReaction(
+CREATE TABLE tmp_investing_state(
+CREATE TABLE tooltipMessage(
+CREATE TABLE transferInstrumentMap (
+CREATE TABLE transfer_customer_ids(
+CREATE TABLE transport_contexts (_id INTEGER PRIMARY KEY, backend_name TEXT NOT NULL, priority INTEGER NOT NULL, next_request_ms INTEGER NOT NULL)
+CREATE TABLE treehouseAppConfig (
+CREATE TABLE treehouseAppConfigurations(
+CREATE TABLE treehouseConfig (
+CREATE TABLE trusted_contact (
+CREATE TABLE trusted_contact(
+CREATE TABLE unhandled_sync_entity (
+CREATE TABLE userRewardsData (
+CREATE TABLE weaverRecommendationsResponses(
+CREATE TABLE webLoginConfig (

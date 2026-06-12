@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pandoc \"/Users/Research/Library/Mobile Documents/com~apple~CloudDocs/Agents/EquityVault/30_Companies/AMZN/ACTIVE_AMZN Buy Note BMAs.docx\" -o /tmp/amzn_buy_note.md)",
+      "Read(//tmp/**)",
+      "Bash(pandoc --track-changes=all \"30_Companies/AMZN/ACTIVE_AMZN Buy Note BMAs.docx\" -o /tmp/amzn_buy_note.md)"
+    ]
+  }
+}

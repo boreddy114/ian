@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"/Users/Research/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin\" -name \"SKILL.md\" 2>/dev/null | head -20)",
+      "Bash(pandoc --track-changes=all \"NOW_ServiceNow Catalini Moat Screen.docx\" -o /tmp/now_moat_screen.md)",
+      "Read(//tmp/**)",
+      "Bash(pandoc --track-changes=all \"NOW_Pressure_Test_Report.docx\" -o /tmp/now_pressure_test.md)",
+      "Bash(pandoc --track-changes=all \"NOW_Pressure_Test_Transcripts.docx\" -o /tmp/now_transcripts.md)",
+      "Bash(pandoc --track-changes=all \"NOW_Pressure Test Transcripts.docx\" -o /tmp/now_transcripts.md)",
+      "Bash(npm list *)",
+      "Bash(node -e \"require\\('docx'\\); console.log\\('docx available'\\)\")",
+      "Bash(node generate_now_moat_screen.js)",
+      "Bash(node -e \"const m = require.resolve.paths\\('docx'\\); console.log\\(m\\)\")",
+      "Bash(ls \"/Users/Research/Library/Mobile Documents/com~apple~CloudDocs/Agents/EquityVault/node_modules/docx\" 2>/dev/null | head -5 && echo \"found at EquityVault\" || echo \"not there\"; find \"/Users/Research/Library/Mobile Documents/com~apple~CloudDocs/Agents\" -name \"docx\" -type d 2>/dev/null | head -5)",
+      "Bash(python3 \"/Users/Research/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/ee4e18cb-ed67-43ab-adb1-937bf1926ba3/6ae931a7-2711-46fc-8132-e49515c4051e/skills/docx/scripts/office/validate.py\" \"Catalini_Moat_Screen_NOW_Final.docx\")",
+      "Bash(/opt/homebrew/bin/python3.12 \"/Users/Research/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/ee4e18cb-ed67-43ab-adb1-937bf1926ba3/6ae931a7-2711-46fc-8132-e49515c4051e/skills/docx/scripts/office/validate.py\" \"Catalini_Moat_Screen_NOW_Final.docx\")",
+      "Bash(/opt/homebrew/bin/pip3.12 install *)",
+      "Bash(/opt/homebrew/bin/python3.12 \"/Users/Research/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/ee4e18cb-ed67-43ab-adb1-937bf1926ba3/6ae931a7-2711-46fc-8132-e49515c4051e/skills/docx/scripts/office/validate.py\" \"/Users/Research/Library/Mobile Documents/com~apple~CloudDocs/Agents/EquityVault/30_Companies/NOW/Catalini_Moat_Screen_NOW_Final.docx\")",
+      "Bash(node -e \"require\\('pptxgenjs'\\); console.log\\('pptxgenjs available'\\)\")",
+      "Bash(node -e \"require\\('pptxgenjs'\\); console.log\\('available at EquityVault'\\)\")",
+      "Bash(npm install *)",
+      "Bash(node -e \"require\\('pptxgenjs'\\); console.log\\('pptxgenjs ready'\\)\")",
+      "Bash(node generate_now_teaching_deck.js)",
+      "Bash(python3 \"/Users/Research/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/ee4e18cb-ed67-43ab-adb1-937bf1926ba3/6ae931a7-2711-46fc-8132-e49515c4051e/skills/pptx/scripts/office/soffice.py\" --headless --convert-to pdf \"/Users/Research/Library/Mobile Documents/com~apple~CloudDocs/Agents/EquityVault/30_Companies/NOW/Catalini_Teaching_Deck_NOW.pptx\")",
+      "Bash(which soffice *)",
+      "Bash(python3 -m markitdown Catalini_Teaching_Deck_NOW.pptx)",
+      "Bash(pip3 install *)",
+      "Bash(pip install *)",
+      "Bash(python3 -m markitdown \"Catalini_Teaching_Deck_NOW.pptx\")",
+      "Bash(rm \"/Users/Research/Library/Mobile Documents/com~apple~CloudDocs/Agents/EquityVault/generate_now_teaching_deck.js\" && ls \"/Users/Research/Library/Mobile Documents/com~apple~CloudDocs/Agents/EquityVault/30_Companies/NOW/\" | grep -E \"Final|Teaching\")"
+    ]
+  }
+}

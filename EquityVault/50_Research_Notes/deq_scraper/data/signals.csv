@@ -1,0 +1,3 @@
+signal_date,signal_type,state,owner,site_name,reg_no,permit_date,program_type,county,detail,equipment_mfg,equipment_model,equipment_ticker,total_units,total_mw,max_kw,fuel_type,fuel_limit_gal,nox_tpy,max_hours_yr,pdf_url
+2026-03-11,NEW_PERMIT,VA,Other,Cardinal Energy Corporation,80941,,10/02/2025,Article 6 - mNSR,,Caterpillar,"3516, 3512",CAT,2,0.0,0,natural_gas,,5.0,,https://www.deq.virginia.gov/home/showpublisheddocument/32400/638989963108100000
+2026-03-11,NEW_PERMIT,VA,Other,Anthem CDC 3,81609,,10/24/2013,Article 6 - mNSR,,,,,,,,,,,,https://www.deq.virginia.gov/home/showpublisheddocument/26022/638633962837530000

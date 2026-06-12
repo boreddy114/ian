@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balanced Portfolio Snapshot</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg: #ffffff; --bg2: #f5f5f3; --bg3: #ebebeb;
+  --tx: #1a1a1a; --tx2: #666; --tx3: #999;
+  --brd: rgba(0,0,0,0.08);
+  --green: #1D9E75; --red: #D85A30; --blue: #378ADD; --gray: #B4B2A9;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a; --bg2: #252525; --bg3: #333;
+    --tx: #e8e8e6; --tx2: #999; --tx3: #666;
+    --brd: rgba(255,255,255,0.08);
+  }
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--bg); color: var(--tx); padding: 24px 32px; max-width: 1280px; margin: 0 auto; font-size: 13px; line-height: 1.5; }
+.header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+.header-title { font-size: 14px; color: var(--tx2); letter-spacing: 0.04em; text-transform: uppercase; }
+.header-date { font-size: 11px; color: var(--tx3); }
+.metric-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-bottom: 20px; }
+.metric { background: var(--bg2); border-radius: 8px; padding: 10px 12px; }
+.metric-label { font-size: 11px; color: var(--tx3); }
+.metric-value { font-size: 18px; font-weight: 500; margin-top: 2px; }
+.metric-sub { font-size: 10px; color: var(--tx3); margin-top: 1px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.grid-val-sector { display: grid; grid-template-columns: 1fr 1.4fr; gap: 16px; margin-bottom: 20px; }
+.section-title { font-size: 12px; color: var(--tx2); font-weight: 500; margin-bottom: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { text-align: left; padding: 5px 6px; color: var(--tx3); font-weight: 400; border-bottom: 1px solid var(--brd); }
+th.r { text-align: right; }
+td { padding: 4px 6px; border-bottom: 1px solid var(--brd); }
+td.r { text-align: right; }
+td.bold { font-weight: 500; }
+.pos { color: var(--green); } .neg { color: var(--red); }
+.legend { display: flex; gap: 14px; font-size: 11px; color: var(--tx2); margin-top: 6px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+.chart-wrap { position: relative; width: 100%; }
+.upload-zone { border: 2px dashed var(--brd); border-radius: 12px; padding: 48px; text-align: center; margin-bottom: 24px; cursor: pointer; transition: border-color 0.2s; }
+.upload-zone:hover, .upload-zone.drag { border-color: var(--blue); }
+.upload-zone h2 { font-size: 18px; font-weight: 500; margin-bottom: 8px; }
+.upload-zone p { color: var(--tx2); font-size: 13px; }
+.upload-zone input { display: none; }
+#dashboard { display: none; }
+.active-bar { display: inline-block; height: 8px; border-radius: 2px; vertical-align: middle; }
+@media print {
+  body { padding: 12px; font-size: 11px; }
+  .upload-zone { display: none; }
+  .metric-row { gap: 6px; }
+  .metric { padding: 6px 8px; }
+  .metric-value { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<div class="upload-zone" id="uploadZone">
+  <h2>Drop your Balanced Tracker Excel file here</h2>
+  <p>Or click to browse. Reads the ALL HC and GICS HC sheets.</p>
+  <input type="file" id="fileInput" accept=".xlsx,.xlsm,.xls">
+</div>
+
+<div id="dashboard">
+  <div class="header">
+    <span class="header-title">Balanced portfolio snapshot</span>
+    <span class="header-date" id="asOfDate"></span>
+  </div>
+
+  <div class="metric-row" id="metricsRow"></div>
+
+  <div class="grid-val-sector">
+    <div>
+      <div class="section-title">Valuation & growth characteristics</div>
+      <table id="valTable"><thead><tr><th>Metric</th><th class="r">Portfolio</th><th class="r">S&P 500</th><th class="r">Spread</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div>
+      <div class="section-title">Sector weights — portfolio vs S&P 500</div>
+      <div class="chart-wrap" style="height: 260px;"><canvas id="sectorChart"></canvas></div>
+      <div class="legend"><span><span class="legend-dot" style="background:#378ADD;"></span>Portfolio</span><span><span class="legend-dot" style="background:#B4B2A9;"></span>S&P 500</span></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-title">Top 10 holdings (absolute weight)</div>
+    <table id="top10Table"><thead><tr><th>Ticker</th><th>Name</th><th>Sector</th><th class="r">Port wt</th><th class="r">SPX wt</th><th class="r">Active</th><th class="r">'26 P/E</th><th class="r">'26 EPS g</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <div class="grid-2" style="margin-top: 20px;">
+    <div>
+      <div class="section-title">Top 10 active overweights</div>
+      <table id="owTable"><thead><tr><th>Ticker</th><th>Name</th><th>Sector</th><th class="r">Port</th><th class="r">SPX</th><th class="r">Active</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div>
+      <div class="section-title">Top 10 active underweights</div>
+      <table id="uwTable"><thead><tr><th>Ticker</th><th>Name</th><th>Sector</th><th class="r">Port</th><th class="r">SPX</th><th class="r">Active</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <div class="section-title">Sector active weights (port − SPX)</div>
+      <div class="chart-wrap" style="height: 280px;"><canvas id="activeChart"></canvas></div>
+    </div>
+    <div>
+      <div class="section-title">Market cap distribution</div>
+      <div class="chart-wrap" style="height: 200px;"><canvas id="mcapChart"></canvas></div>
+      <div class="legend"><span><span class="legend-dot" style="background:#378ADD;"></span>Portfolio</span><span><span class="legend-dot" style="background:#B4B2A9;"></span>S&P 500</span></div>
+      <div style="margin-top: 16px;">
+        <div class="section-title">Additional characteristics</div>
+        <table id="charTable"><thead><tr><th></th><th class="r">Portfolio</th><th class="r">S&P 500</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <div class="section-title">EPS growth contribution ('26 Y/Y) — who's driving the portfolio's earnings growth?</div>
+    <div class="metric-row" style="grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 12px;">
+      <div class="metric"><div class="metric-label">Aggregate '26 EPS growth</div><div class="metric-value" id="aggGrowth">—</div></div>
+      <div class="metric"><div class="metric-label">Top 5 contribution</div><div class="metric-value" id="top5Contrib">—</div><div class="metric-sub" id="top5Pct"></div></div>
+      <div class="metric"><div class="metric-label">Top 10 contribution</div><div class="metric-value" id="top10Contrib">—</div><div class="metric-sub" id="top10Pct"></div></div>
+      <div class="metric"><div class="metric-label">Effective # of growth drivers</div><div class="metric-value" id="effNames">—</div><div class="metric-sub" id="effNamesSub"></div></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="section-title">Top 15 growth contributors</div>
+        <table id="growthTable"><thead><tr><th>Ticker</th><th>Name</th><th class="r">Port wt</th><th class="r">Earn %</th><th class="r">EPS g</th><th class="r">Contrib</th><th class="r">Cumul</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div>
+        <div class="section-title">Growth contribution — top 10 waterfall</div>
+        <div class="chart-wrap" style="height: 340px;"><canvas id="growthChart"></canvas></div>
+        <div style="margin-top: 12px;">
+          <div class="section-title">Growth detractors</div>
+          <table id="detractTable"><thead><tr><th>Ticker</th><th>Name</th><th class="r">Port wt</th><th class="r">EPS g</th><th class="r">Contrib</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <div class="section-title">Active EPS growth attribution ('26 Y/Y) — what are your active bets adding vs SPX?</div>
+    <div class="metric-row" style="grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 12px;">
+      <div class="metric"><div class="metric-label">Portfolio growth</div><div class="metric-value" id="actPortG">—</div></div>
+      <div class="metric"><div class="metric-label">Index growth (decomp)</div><div class="metric-value" id="actIdxG">—</div></div>
+      <div class="metric"><div class="metric-label">Active growth spread</div><div class="metric-value" id="actSpread">—</div><div class="metric-sub" id="actSpreadSub"></div></div>
+      <div class="metric"><div class="metric-label">Active growth from top 5</div><div class="metric-value" id="actTop5">—</div></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="section-title">Top 10 active growth contributors (overweighting fast growers / underweighting slow)</div>
+        <table id="actOWTable"><thead><tr><th>Ticker</th><th>Name</th><th class="r">Port wt</th><th class="r">SPX wt</th><th class="r">EPS g</th><th class="r">Port con</th><th class="r">SPX con</th><th class="r">Active</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div>
+        <div class="section-title">Active growth attribution — top 10 contributors</div>
+        <div class="chart-wrap" style="height: 280px;"><canvas id="activeGrowthChart"></canvas></div>
+        <div style="margin-top: 12px;">
+          <div class="section-title">Top 10 active growth detractors (underweighting fast growers / overweighting slow)</div>
+          <table id="actUWTable"><thead><tr><th>Ticker</th><th>Name</th><th class="r">Port wt</th><th class="r">SPX wt</th><th class="r">EPS g</th><th class="r">Active</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <div class="section-title">Scenario stress test — how does the portfolio's sector positioning perform under adverse regimes?</div>
+    <div class="grid-2" style="margin-top: 8px;">
+      <div>
+        <div class="section-title" style="margin-bottom: 4px;">Stagflation (WFC historical avg sector relative returns)</div>
+        <div class="metric-row" style="grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 8px;">
+          <div class="metric"><div class="metric-label">Portfolio sector return</div><div class="metric-value" id="stagPort">—</div></div>
+          <div class="metric"><div class="metric-label">Active sector drag</div><div class="metric-value" id="stagActive">—</div></div>
+        </div>
+        <div class="chart-wrap" style="height: 280px;"><canvas id="stagChart"></canvas></div>
+      </div>
+      <div>
+        <div class="section-title" style="margin-bottom: 4px;">Q1 2026 replay (actual sector returns)</div>
+        <div class="metric-row" style="grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 8px;">
+          <div class="metric"><div class="metric-label">Portfolio sector return</div><div class="metric-value" id="q1Port">—</div></div>
+          <div class="metric"><div class="metric-label">Active sector drag</div><div class="metric-value" id="q1Active">—</div></div>
+        </div>
+        <div class="chart-wrap" style="height: 280px;"><canvas id="q1Chart"></canvas></div>
+      </div>
+    </div>
+    <div style="margin-top: 14px;">
+      <div class="section-title">Sector exposure — active impact by scenario</div>
+      <table id="scenarioTable"><thead><tr><th>Sector</th><th class="r">Port wt</th><th class="r">SPX wt</th><th class="r">Active</th><th class="r">Stag impact</th><th class="r">Q1 impact</th><th class="r">Both hurt?</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+</div>
+
+<script>
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const txtSec = isDark ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.4)';
+const gridC = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.06)';
+
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag'));
+uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.classList.remove('drag'); processFile(e.dataTransfer.files[0]); });
+fileInput.addEventListener('change', e => processFile(e.target.files[0]));
+
+let sectorChartInstance = null;
+let activeChartInstance = null;
+let mcapChartInstance = null;
+let growthChartInstance = null;
+let activeGrowthChartInstance = null;
+let stagChartInstance = null;
+let q1ChartInstance = null;
+
+function processFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const wb = XLSX.read(e.target.result, { type: 'array' });
+      const allHC = parseSheet(wb, 'ALL HC');
+      const gicsHC = parseSheet(wb, 'GICS HC');
+      buildDashboard(allHC, gicsHC);
+    } catch(err) {
+      alert('Error reading file: ' + err.message);
+      console.error(err);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function parseSheet(wb, name) {
+  const ws = wb.Sheets[name];
+  if (!ws) throw new Error('Sheet "' + name + '" not found');
+  return XLSX.utils.sheet_to_json(ws, { header: 1, defval: null });
+}
+
+function findHeaderRow(rows, col1Label, col5Label) {
+  for (let i = 0; i < Math.min(rows.length, 20); i++) {
+    if (rows[i] && rows[i][1] === col1Label && rows[i][5] === col5Label) return i;
+  }
+  return -1;
+}
+
+function num(v) { return typeof v === 'number' && isFinite(v) ? v : null; }
+function pct(v, d) { return v != null ? (v * 100).toFixed(d || 1) + '%' : '—'; }
+function xfmt(v, d) { return v != null ? v.toFixed(d || 1) + 'x' : '—'; }
+function wfmt(v) { return v != null ? v.toFixed(2) + '%' : '0.00%'; }
+function dollar(v) {
+  if (v == null) return '—';
+  if (v >= 1e12) return '$' + (v/1e12).toFixed(2) + 'T';
+  if (v >= 1e9) return '$' + (v/1e9).toFixed(1) + 'B';
+  if (v >= 1e6) return '$' + (v/1e6).toFixed(0) + 'M';
+  return '$' + v.toFixed(0);
+}
+
+function wtdAvg(rows, wgtIdx, valIdx, opts) {
+  let tw = 0, twv = 0;
+  const posOnly = opts && opts.positive;
+  for (const r of rows) {
+    const w = num(r[wgtIdx]), v = num(r[valIdx]);
+    if (w && w > 0 && v != null) {
+      if (posOnly && v <= 0) continue;
+      tw += w; twv += w * v;
+    }
+  }
+  return tw > 0 ? twv / tw : null;
+}
+
+function colorVal(v) { return v > 0 ? 'pos' : v < 0 ? 'neg' : ''; }
+
+function spreadFmt(a, b, suffix) {
+  if (a == null || b == null) return '—';
+  const d = a - b;
+  const sign = d > 0 ? '+' : '';
+  return sign + d.toFixed(1) + (suffix || '');
+}
+
+function buildDashboard(allRows, gicsRows) {
+  // Find header row in ALL HC
+  const hIdx = findHeaderRow(allRows, 'Position', 'Ticker');
+  if (hIdx < 0) { alert('Could not find header row in ALL HC'); return; }
+
+  // Parse positions
+  const positions = [];
+  for (let i = hIdx + 1; i < allRows.length; i++) {
+    const r = allRows[i];
+    if (!r || !r[5] || typeof r[5] !== 'string' || !r[5].includes('Equity')) break;
+    positions.push(r);
+  }
+
+  const portPos = positions.filter(p => num(p[3]) && p[3] > 0);
+  const allIdx = positions.filter(p => num(p[4]) && p[4] > 0);
+
+  // Summary data from rows above header
+  const summaryPE = allRows[hIdx - 4]; // Row with Port PE, SPX PE
+  const summaryEarn = allRows[hIdx - 3]; // Row with total value, earnings, revs
+  const summaryGrowth = allRows[hIdx - 2]; // Y/Y growth
+  const summaryPErow = allRows[hIdx - 1]; // Aggregate P/E by year
+
+  const totalValue = num(summaryEarn[2]);
+
+  // Aggregate PE from the spreadsheet's own calc
+  const portPE25 = num(summaryPErow[89]);
+  const portPE26 = num(summaryPErow[90]);
+  const portPE27 = num(summaryPErow[91]);
+
+  // Aggregate EPS growth
+  const portEPSg26 = num(summaryGrowth[90]);
+  const portEPSg27 = num(summaryGrowth[91]);
+  const portRevg26 = num(summaryGrowth[87]);
+  const portRevg27 = num(summaryGrowth[88]);
+
+  // GICS HC - SPX data (SheetJS drops empty col A, so all indices are -1 vs Excel)
+  const spxRow = gicsRows[4];
+  const spxPE25 = num(spxRow[5]);   // Excel col G = '25 P/E
+  const spxPE26 = num(spxRow[6]);   // Excel col H = '26 P/E
+  const spxPE27 = num(spxRow[7]);   // Excel col I = '27 P/E
+  const spxEPS25 = num(spxRow[19]); // Excel col U = '25 EPS
+  const spxEPS26 = num(spxRow[20]); // Excel col V = '26 EPS
+  const spxEPS27 = num(spxRow[21]); // Excel col W = '27 EPS
+  const spxEPSg26 = (spxEPS25 && spxEPS26) ? (spxEPS26/spxEPS25 - 1) : null;
+  const spxEPSg27 = (spxEPS26 && spxEPS27) ? (spxEPS27/spxEPS26 - 1) : null;
+
+  // Stock-level weighted averages
+  const pEvEb25 = wtdAvg(portPos, 3, 64, {positive:true});
+  const pEvEb26 = wtdAvg(portPos, 3, 65, {positive:true});
+  const sEvEb25 = wtdAvg(positions, 4, 64, {positive:true});
+  const sEvEb26 = wtdAvg(positions, 4, 65, {positive:true});
+  const pEbM = wtdAvg(portPos, 3, 58);
+  const sEbM = wtdAvg(positions, 4, 58);
+  const pEiM = wtdAvg(portPos, 3, 61);
+  const sEiM = wtdAvg(positions, 4, 61);
+  const pROE = wtdAvg(portPos, 3, 74);
+  const sROE = wtdAvg(positions, 4, 74);
+  const pYld = wtdAvg(portPos, 3, 47);
+  const sYld = wtdAvg(positions, 4, 47);
+  const pBeta = wtdAvg(portPos, 3, 39);
+  const sBeta = wtdAvg(positions, 4, 39);
+  const pMkCap = wtdAvg(portPos, 3, 46);
+  const sMkCap = wtdAvg(positions, 4, 46);
+
+  // Active share
+  let activeShare = 0;
+  for (const p of positions) {
+    const pw = num(p[3]) || 0;
+    const iw = num(p[4]) || 0;
+    activeShare += Math.abs(pw - iw);
+  }
+  activeShare /= 2;
+
+  // Concentration
+  const sorted = [...portPos].sort((a, b) => b[3] - a[3]);
+  const top10Conc = sorted.slice(0, 10).reduce((s, p) => s + p[3], 0);
+  const top20Conc = sorted.slice(0, 20).reduce((s, p) => s + p[3], 0);
+
+  // Date
+  document.getElementById('asOfDate').textContent = 'As of ' + new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }) + ' · USD · Benchmark: S&P 500';
+
+  // === METRICS ROW ===
+  const metricsHTML = [
+    { label: 'Portfolio value', value: dollar(totalValue), sub: '' },
+    { label: 'Positions', value: portPos.length, sub: 'vs ' + allIdx.length + ' in SPX' },
+    { label: 'Active share', value: activeShare.toFixed(1) + '%', sub: '' },
+    { label: 'Wtd avg beta', value: pBeta ? pBeta.toFixed(2) : '—', sub: sBeta ? 'SPX ' + sBeta.toFixed(2) : '' },
+    { label: 'Top 10 concentration', value: top10Conc.toFixed(1) + '%', sub: 'Top 20: ' + top20Conc.toFixed(1) + '%' },
+    { label: 'Wtd avg mkt cap', value: pMkCap ? dollar(pMkCap * 1e6) : '—', sub: sMkCap ? 'SPX ' + dollar(sMkCap * 1e6) : '' },
+  ].map(m => `<div class="metric"><div class="metric-label">${m.label}</div><div class="metric-value">${m.value}</div>${m.sub ? '<div class="metric-sub">' + m.sub + '</div>' : ''}</div>`).join('');
+  document.getElementById('metricsRow').innerHTML = metricsHTML;
+
+  // === VALUATION TABLE ===
+  const valRows = [
+    ["P/E ('25)", xfmt(portPE25), xfmt(spxPE25), spreadFmt(portPE25, spxPE25, 'x')],
+    ["P/E ('26)", xfmt(portPE26), xfmt(spxPE26), spreadFmt(portPE26, spxPE26, 'x')],
+    ["P/E ('27)", xfmt(portPE27), xfmt(spxPE27), spreadFmt(portPE27, spxPE27, 'x')],
+    ["EV/EBITDA ('25)", xfmt(pEvEb25), xfmt(sEvEb25), spreadFmt(pEvEb25, sEvEb25, 'x')],
+    ["EV/EBITDA ('26)", xfmt(pEvEb26), xfmt(sEvEb26), spreadFmt(pEvEb26, sEvEb26, 'x')],
+    ["EPS growth ('26)", pct(portEPSg26), pct(spxEPSg26), spreadFmt(portEPSg26 ? portEPSg26*100 : null, spxEPSg26 ? spxEPSg26*100 : null, '%')],
+    ["EPS growth ('27)", pct(portEPSg27), pct(spxEPSg27), spreadFmt(portEPSg27 ? portEPSg27*100 : null, spxEPSg27 ? spxEPSg27*100 : null, '%')],
+    ["Rev growth ('26)", pct(portRevg26), '—', '—'],
+    ["Rev growth ('27)", pct(portRevg27), '—', '—'],
+    ["EBITDA margin ('25)", pct(pEbM), pct(sEbM), spreadFmt(pEbM ? pEbM*100 : null, sEbM ? sEbM*100 : null, '%')],
+    ["EBIT margin ('25)", pct(pEiM), pct(sEiM), spreadFmt(pEiM ? pEiM*100 : null, sEiM ? sEiM*100 : null, '%')],
+    ["5yr avg ROE", pct(pROE), pct(sROE), spreadFmt(pROE ? pROE*100 : null, sROE ? sROE*100 : null, '%')],
+    ["Dividend yield", pct(pYld), pct(sYld), spreadFmt(pYld ? pYld*100 : null, sYld ? sYld*100 : null, '%')],
+  ];
+  const valTbody = document.querySelector('#valTable tbody');
+  valTbody.innerHTML = valRows.map(r => {
+    const sp = parseFloat(r[3]);
+    const cls = isNaN(sp) ? '' : (sp > 0 ? 'pos' : sp < 0 ? 'neg' : '');
+    return `<tr><td>${r[0]}</td><td class="r bold">${r[1]}</td><td class="r" style="color:var(--tx2)">${r[2]}</td><td class="r ${cls}">${r[3]}</td></tr>`;
+  }).join('');
+
+  // === SECTOR CHART ===
+  const sectorMap = {};
+  for (const p of positions) {
+    const s = p[43] || 'Unknown';
+    if (!sectorMap[s]) sectorMap[s] = { port: 0, idx: 0 };
+    if (num(p[3]) && p[3] > 0) sectorMap[s].port += p[3];
+    if (num(p[4]) && p[4] > 0) sectorMap[s].idx += p[4];
+  }
+  const sectorLabels = Object.keys(sectorMap).sort((a, b) => sectorMap[b].port - sectorMap[a].port);
+  const shortSector = s => s.replace('Information Technology', 'Info Tech').replace('Communication Services', 'Comm Svcs').replace('Consumer Discretionary', 'Cons Disc').replace('Consumer Staples', 'Cons Stap').replace('Health Care', 'Health').replace('Real Estate', 'RE');
+  const portWts = sectorLabels.map(s => Math.round(sectorMap[s].port * 100) / 100);
+  const bmkWts = sectorLabels.map(s => Math.round(sectorMap[s].idx * 100) / 100);
+
+  if (sectorChartInstance) sectorChartInstance.destroy();
+  sectorChartInstance = new Chart(document.getElementById('sectorChart'), {
+    type: 'bar',
+    data: {
+      labels: sectorLabels.map(shortSector),
+      datasets: [
+        { label: 'Portfolio', data: portWts, backgroundColor: '#378ADD', borderRadius: 2, barPercentage: 0.7, categoryPercentage: 0.7 },
+        { label: 'S&P 500', data: bmkWts, backgroundColor: '#B4B2A9', borderRadius: 2, barPercentage: 0.7, categoryPercentage: 0.7 }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+      scales: { x: { ticks: { color: txtSec, font: { size: 9 }, maxRotation: 45, autoSkip: false }, grid: { display: false }, border: { display: false } },
+               y: { ticks: { color: txtSec, font: { size: 10 }, callback: v => v + '%' }, grid: { color: gridC }, border: { display: false } } } }
+  });
+
+  // === TOP 10 ABSOLUTE ===
+  const top10 = sorted.slice(0, 10);
+  document.querySelector('#top10Table tbody').innerHTML = top10.map(p => {
+    const act = (num(p[37]) || 0);
+    const cls = colorVal(act);
+    const pe26 = num(p[69]);
+    const eg26 = num(p[54]);
+    return `<tr><td class="bold">${(p[35]||'').replace(' Equity','')}</td><td style="color:var(--tx2)">${p[36]||''}</td><td style="color:var(--tx3);font-size:11px">${shortSector(p[43]||'')}</td><td class="r">${p[3].toFixed(1)}%</td><td class="r" style="color:var(--tx2)">${(num(p[4])||0).toFixed(1)}%</td><td class="r bold ${cls}">${act>=0?'+':''}${act.toFixed(2)}%</td><td class="r">${pe26?pe26.toFixed(1)+'x':'—'}</td><td class="r">${eg26?pct(eg26):'—'}</td></tr>`;
+  }).join('');
+
+  // === TOP 10 OW / UW ===
+  const allActive = positions.filter(p => num(p[37]) != null).map(p => ({ r: p, a: p[37] }));
+  allActive.sort((a, b) => b.a - a.a);
+  const top10OW = allActive.slice(0, 10);
+  const top10UW = allActive.slice(-10).reverse();
+
+  function fillActiveTable(id, data, isOW) {
+    document.querySelector('#' + id + ' tbody').innerHTML = data.map(d => {
+      const p = d.r;
+      const cls = isOW ? 'pos' : 'neg';
+      return `<tr><td class="bold">${(p[35]||'').replace(' Equity','')}</td><td style="color:var(--tx2);font-size:11px">${p[36]||''}</td><td style="color:var(--tx3);font-size:11px">${shortSector(p[43]||'')}</td><td class="r">${(num(p[3])||0).toFixed(1)}%</td><td class="r" style="color:var(--tx2)">${(num(p[4])||0).toFixed(1)}%</td><td class="r bold ${cls}">${d.a>=0?'+':''}${d.a.toFixed(2)}%</td></tr>`;
+    }).join('');
+  }
+  fillActiveTable('owTable', top10OW, true);
+  fillActiveTable('uwTable', top10UW, false);
+
+  // === SECTOR ACTIVE CHART ===
+  const activeData = sectorLabels.map(s => Math.round((sectorMap[s].port - sectorMap[s].idx) * 100) / 100);
+  const activeColors = activeData.map(v => v >= 0 ? '#378ADD' : '#D85A30');
+
+  if (activeChartInstance) activeChartInstance.destroy();
+  activeChartInstance = new Chart(document.getElementById('activeChart'), {
+    type: 'bar',
+    data: { labels: sectorLabels.map(shortSector), datasets: [{ data: activeData, backgroundColor: activeColors, borderRadius: 2, barPercentage: 0.55 }] },
+    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+      scales: { x: { ticks: { color: txtSec, font: { size: 10 }, callback: v => (v>0?'+':'') + v.toFixed(1) + '%' }, grid: { color: gridC }, border: { display: false } },
+               y: { ticks: { color: txtSec, font: { size: 9 } }, grid: { display: false }, border: { display: false } } } }
+  });
+
+  // === MKT CAP CHART ===
+  const capBuckets = [
+    { label: 'Mega (>$500B)', min: 500000 },
+    { label: 'Large ($100-500B)', min: 100000, max: 500000 },
+    { label: 'Mid ($20-100B)', min: 20000, max: 100000 },
+    { label: 'Small (<$20B)', min: 0, max: 20000 },
+  ];
+  function bucketize(rows, wgtCol) {
+    return capBuckets.map(b => {
+      let total = 0;
+      for (const r of rows) {
+        const w = num(r[wgtCol]), m = num(r[46]);
+        if (w && w > 0 && m) {
+          if (m > (b.min || 0) && (!b.max || m <= b.max)) total += w;
+          if (!b.max && m > b.min) {} // mega handled above
+        }
+      }
+      return Math.round(total * 10) / 10;
+    });
+  }
+  const capPort = bucketize(portPos, 3);
+  const capIdx = bucketize(allIdx, 4);
+
+  if (mcapChartInstance) mcapChartInstance.destroy();
+  mcapChartInstance = new Chart(document.getElementById('mcapChart'), {
+    type: 'bar',
+    data: {
+      labels: capBuckets.map(b => b.label),
+      datasets: [
+        { label: 'Portfolio', data: capPort, backgroundColor: '#378ADD', borderRadius: 2, barPercentage: 0.7, categoryPercentage: 0.7 },
+        { label: 'S&P 500', data: capIdx, backgroundColor: '#B4B2A9', borderRadius: 2, barPercentage: 0.7, categoryPercentage: 0.7 }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+      scales: { x: { ticks: { color: txtSec, font: { size: 9 } }, grid: { display: false }, border: { display: false } },
+               y: { ticks: { color: txtSec, font: { size: 10 }, callback: v => v + '%' }, grid: { color: gridC }, border: { display: false } } } }
+  });
+
+  // === ADDITIONAL CHARACTERISTICS ===
+  const charRows = [
+    ['# Holdings', portPos.length, allIdx.length],
+    ['Top 10 weight', top10Conc.toFixed(1) + '%', '—'],
+    ['Top 20 weight', top20Conc.toFixed(1) + '%', '—'],
+    ['Active share', activeShare.toFixed(1) + '%', '—'],
+  ];
+  document.querySelector('#charTable tbody').innerHTML = charRows.map(r =>
+    `<tr><td style="color:var(--tx2)">${r[0]}</td><td class="r bold">${r[1]}</td><td class="r" style="color:var(--tx2)">${r[2]}</td></tr>`
+  ).join('');
+
+  // === EPS GROWTH CONTRIBUTION ===
+  const totalEarn25 = num(summaryEarn[89]);
+  const totalEarn26 = num(summaryEarn[90]);
+  const aggGrowth = (totalEarn25 && totalEarn26) ? (totalEarn26 / totalEarn25 - 1) : null;
+
+  const growthData = portPos.map(p => {
+    const e25 = num(p[89]) || 0;
+    const e26 = num(p[90]) || 0;
+    const contrib = totalEarn25 > 0 ? (e26 - e25) / totalEarn25 : 0;
+    const earnShare = totalEarn25 > 0 ? e25 / totalEarn25 : 0;
+    const stockG = e25 > 0 ? (e26 / e25 - 1) : null;
+    return {
+      ticker: (p[35] || '').replace(' Equity', ''),
+      name: p[36] || '',
+      sector: p[43] || '',
+      portWgt: p[3],
+      earnShare: earnShare,
+      stockG: stockG,
+      contrib: contrib,
+    };
+  }).sort((a, b) => b.contrib - a.contrib);
+
+  const totalContrib = growthData.reduce((s, d) => s + d.contrib, 0);
+  const top5C = growthData.slice(0, 5).reduce((s, d) => s + d.contrib, 0);
+  const top10C = growthData.slice(0, 10).reduce((s, d) => s + d.contrib, 0);
+  const posContribs = growthData.filter(d => d.contrib > 0);
+  const totalPos = posContribs.reduce((s, d) => s + d.contrib, 0);
+  const herf = totalPos > 0 ? posContribs.reduce((s, d) => s + (d.contrib / totalPos) ** 2, 0) : 0;
+  const effN = herf > 0 ? 1 / herf : 0;
+
+  document.getElementById('aggGrowth').textContent = aggGrowth != null ? (aggGrowth * 100).toFixed(1) + '%' : '—';
+  document.getElementById('top5Contrib').textContent = (top5C * 100).toFixed(1) + 'pp';
+  document.getElementById('top5Pct').textContent = totalContrib ? Math.round(top5C / totalContrib * 100) + '% of total growth' : '';
+  document.getElementById('top10Contrib').textContent = (top10C * 100).toFixed(1) + 'pp';
+  document.getElementById('top10Pct').textContent = totalContrib ? Math.round(top10C / totalContrib * 100) + '% of total growth' : '';
+  document.getElementById('effNames').textContent = effN.toFixed(1);
+  document.getElementById('effNamesSub').textContent = 'out of ' + posContribs.length + ' positive contributors';
+
+  // Top 15 growth contributors table
+  let cum = 0;
+  document.querySelector('#growthTable tbody').innerHTML = growthData.slice(0, 15).map(d => {
+    cum += d.contrib;
+    const gStr = d.stockG != null ? (d.stockG * 100).toFixed(0) + '%' : '—';
+    const cCls = d.contrib >= 0 ? 'pos' : 'neg';
+    return `<tr><td class="bold">${d.ticker}</td><td style="color:var(--tx2);font-size:11px">${d.name}</td><td class="r">${d.portWgt.toFixed(1)}%</td><td class="r" style="color:var(--tx2)">${(d.earnShare*100).toFixed(1)}%</td><td class="r">${gStr}</td><td class="r bold ${cCls}">${(d.contrib*100).toFixed(1)}pp</td><td class="r" style="color:var(--tx2)">${(cum*100).toFixed(1)}%</td></tr>`;
+  }).join('');
+
+  // Detractors table
+  const detractors = growthData.filter(d => d.contrib < 0).sort((a, b) => a.contrib - b.contrib);
+  const detractBody = document.querySelector('#detractTable tbody');
+  if (detractors.length === 0) {
+    detractBody.innerHTML = '<tr><td colspan="5" style="color:var(--tx3)">No detractors</td></tr>';
+  } else {
+    detractBody.innerHTML = detractors.map(d => {
+      const gStr = d.stockG != null ? (d.stockG * 100).toFixed(0) + '%' : '—';
+      return `<tr><td class="bold">${d.ticker}</td><td style="color:var(--tx2);font-size:11px">${d.name}</td><td class="r">${d.portWgt.toFixed(1)}%</td><td class="r">${gStr}</td><td class="r bold neg">${(d.contrib*100).toFixed(2)}pp</td></tr>`;
+    }).join('');
+  }
+
+  // Growth waterfall chart — top 10 contributors as bars
+  const waterfallData = growthData.slice(0, 10);
+  const wfLabels = waterfallData.map(d => d.ticker);
+  const wfValues = waterfallData.map(d => Math.round(d.contrib * 1000) / 10);
+  const wfColors = wfValues.map(v => v >= 0 ? '#378ADD' : '#D85A30');
+
+  if (growthChartInstance) growthChartInstance.destroy();
+  growthChartInstance = new Chart(document.getElementById('growthChart'), {
+    type: 'bar',
+    data: {
+      labels: wfLabels,
+      datasets: [{
+        data: wfValues,
+        backgroundColor: wfColors,
+        borderRadius: 2,
+        barPercentage: 0.6,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ctx.parsed.y.toFixed(1) + 'pp' } }
+      },
+      scales: {
+        x: { ticks: { color: txtSec, font: { size: 10 } }, grid: { display: false }, border: { display: false } },
+        y: { ticks: { color: txtSec, font: { size: 10 }, callback: v => v + 'pp' }, grid: { color: gridC }, border: { display: false } }
+      }
+    }
+  });
+
+  // === ACTIVE EPS GROWTH ATTRIBUTION ===
+  // Port contrib uses actual aggregate earnings from ALL HC summary rows
+  // Idx growth anchored to GICS HC SPX EPS growth (top-down consensus)
+  // Stock-level idx contributions estimated via earnings-yield weights, then scaled to match GICS total
+
+  // SPX aggregate EPS growth from GICS HC (the authoritative number)
+  const spxAggG = (spxEPS25 && spxEPS26) ? (spxEPS26 / spxEPS25 - 1) : null;
+
+  let portEYpool = 0, idxEYpool = 0;
+  const activeGrowthRaw = positions.map(p => {
+    const pw = num(p[3]) || 0;
+    const iw = num(p[4]) || 0;
+    const pe25 = num(p[68]);
+    const pey = (pe25 && pe25 > 0 && pw > 0) ? pw / pe25 : 0;
+    const iey = (pe25 && pe25 > 0 && iw > 0) ? iw / pe25 : 0;
+    portEYpool += pey;
+    idxEYpool += iey;
+    return { p, pw, iw, pey, iey, epsG: num(p[54]) || 0 };
+  });
+
+  // Raw bottom-up idx growth (will be scaled to match GICS HC)
+  let rawIdxG = 0;
+  const rawIdxContribs = activeGrowthRaw.map(d => {
+    const idxES = idxEYpool > 0 ? d.iey / idxEYpool : 0;
+    const raw = idxES * d.epsG;
+    rawIdxG += raw;
+    return raw;
+  });
+
+  // Scale factor to anchor stock-level idx contributions to GICS HC total
+  const idxScale = (spxAggG != null && rawIdxG !== 0) ? spxAggG / rawIdxG : 1;
+
+  const activeGrowthAll = activeGrowthRaw.map((d, i) => {
+    const portES = portEYpool > 0 ? d.pey / portEYpool : 0;
+    const portC = portES * d.epsG;
+    const idxC = rawIdxContribs[i] * idxScale;
+    return {
+      ticker: (d.p[35] || '').replace(' Equity', ''),
+      name: d.p[36] || '',
+      pw: d.pw, iw: d.iw,
+      epsG: d.epsG,
+      portC, idxC,
+      activeC: portC - idxC,
+    };
+  });
+
+  activeGrowthAll.sort((a, b) => b.activeC - a.activeC);
+
+  const totalPortG = activeGrowthAll.reduce((s, d) => s + d.portC, 0);
+  const totalIdxG = spxAggG || activeGrowthAll.reduce((s, d) => s + d.idxC, 0);
+  const totalActiveG = totalPortG - totalIdxG;
+  const actTop5 = activeGrowthAll.slice(0, 5).reduce((s, d) => s + d.activeC, 0);
+
+  document.getElementById('actPortG').textContent = (totalPortG * 100).toFixed(1) + '%';
+  document.getElementById('actIdxG').textContent = (totalIdxG * 100).toFixed(1) + '%';
+  const actSpEl = document.getElementById('actSpread');
+  actSpEl.textContent = (totalActiveG >= 0 ? '+' : '') + (totalActiveG * 100).toFixed(1) + 'pp';
+  actSpEl.className = 'metric-value ' + (totalActiveG >= 0 ? 'pos' : 'neg');
+  document.getElementById('actSpreadSub').textContent = 'from active stock selection';
+  document.getElementById('actTop5').textContent = (actTop5 >= 0 ? '+' : '') + (actTop5 * 100).toFixed(1) + 'pp';
+
+  // Top 10 active growth contributors table
+  document.querySelector('#actOWTable tbody').innerHTML = activeGrowthAll.slice(0, 10).map(d => {
+    const eg = d.epsG ? (d.epsG * 100).toFixed(0) + '%' : '—';
+    return `<tr><td class="bold">${d.ticker}</td><td style="color:var(--tx2);font-size:11px">${d.name}</td><td class="r">${d.pw.toFixed(1)}%</td><td class="r" style="color:var(--tx2)">${d.iw.toFixed(1)}%</td><td class="r">${eg}</td><td class="r">${(d.portC*100).toFixed(1)}pp</td><td class="r" style="color:var(--tx2)">${(d.idxC*100).toFixed(1)}pp</td><td class="r bold pos">+${(d.activeC*100).toFixed(2)}pp</td></tr>`;
+  }).join('');
+
+  // Bottom 10 active growth detractors
+  const actBottom = activeGrowthAll.slice(-10).reverse();
+  document.querySelector('#actUWTable tbody').innerHTML = actBottom.map(d => {
+    const eg = d.epsG ? (d.epsG * 100).toFixed(0) + '%' : '—';
+    return `<tr><td class="bold">${d.ticker}</td><td style="color:var(--tx2);font-size:11px">${d.name}</td><td class="r">${d.pw.toFixed(1)}%</td><td class="r" style="color:var(--tx2)">${d.iw.toFixed(1)}%</td><td class="r">${eg}</td><td class="r bold neg">${(d.activeC*100).toFixed(2)}pp</td></tr>`;
+  }).join('');
+
+  // Active growth chart — horizontal bar, top 10 contributors
+  const agLabels = activeGrowthAll.slice(0, 10).map(d => d.ticker);
+  const agValues = activeGrowthAll.slice(0, 10).map(d => Math.round(d.activeC * 10000) / 100);
+  const agColors = agValues.map(v => v >= 0 ? '#1D9E75' : '#D85A30');
+
+  if (activeGrowthChartInstance) activeGrowthChartInstance.destroy();
+  activeGrowthChartInstance = new Chart(document.getElementById('activeGrowthChart'), {
+    type: 'bar',
+    data: { labels: agLabels, datasets: [{ data: agValues, backgroundColor: agColors, borderRadius: 2, barPercentage: 0.55 }] },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => (ctx.parsed.x >= 0 ? '+' : '') + ctx.parsed.x.toFixed(2) + 'pp' } } },
+      scales: {
+        x: { ticks: { color: txtSec, font: { size: 10 }, callback: v => '+' + v.toFixed(1) + 'pp' }, grid: { color: gridC }, border: { display: false } },
+        y: { ticks: { color: txtSec, font: { size: 10 } }, grid: { display: false }, border: { display: false } }
+      }
+    }
+  });
+
+  // === SCENARIO STRESS TEST ===
+  const stagReturns = {
+    'Energy': 0.12, 'Utilities': 0.10, 'Consumer Staples': 0.06,
+    'Communication Services': 0.04, 'Health Care': 0.02, 'Information Technology': 0.00,
+    'Industrials': -0.01, 'Materials': -0.01, 'Financials': -0.02,
+    'Real Estate': -0.03, 'Consumer Discretionary': -0.06,
+  };
+  const q1Returns = {
+    'Energy': 0.383, 'Materials': 0.097, 'Utilities': 0.083,
+    'Consumer Staples': 0.077, 'Industrials': 0.046, 'Real Estate': 0.028,
+    'Health Care': -0.049, 'Communication Services': -0.069,
+    'Information Technology': -0.091, 'Consumer Discretionary': -0.092, 'Financials': -0.094,
+  };
+
+  const scenarioSectors = Object.keys(stagReturns);
+  let stagPortTotal = 0, stagSpxTotal = 0, q1PortTotal = 0, q1SpxTotal = 0;
+  const scenarioRows = scenarioSectors.map(s => {
+    const pw = sectorMap[s] ? sectorMap[s].port : 0;
+    const iw = sectorMap[s] ? sectorMap[s].idx : 0;
+    const act = pw - iw;
+    const sr = stagReturns[s] || 0;
+    const qr = q1Returns[s] || 0;
+    const stagImp = (act / 100) * sr;
+    const q1Imp = (act / 100) * qr;
+    stagPortTotal += (pw / 100) * sr;
+    stagSpxTotal += (iw / 100) * sr;
+    q1PortTotal += (pw / 100) * qr;
+    q1SpxTotal += (iw / 100) * qr;
+    return { sector: s, pw, iw, act, stagImp, q1Imp, bothHurt: stagImp < -0.0001 && q1Imp < -0.0001 };
+  });
+
+  const stagActiveTot = stagPortTotal - stagSpxTotal;
+  const q1ActiveTot = q1PortTotal - q1SpxTotal;
+
+  const stagPortEl = document.getElementById('stagPort');
+  stagPortEl.textContent = (stagPortTotal >= 0 ? '+' : '') + (stagPortTotal * 100).toFixed(1) + '%';
+  stagPortEl.style.color = stagPortTotal >= 0 ? 'var(--green)' : 'var(--red)';
+  const stagActEl = document.getElementById('stagActive');
+  stagActEl.textContent = (stagActiveTot >= 0 ? '+' : '') + Math.round(stagActiveTot * 10000) + 'bps';
+  stagActEl.style.color = stagActiveTot >= 0 ? 'var(--green)' : 'var(--red)';
+
+  const q1PortEl = document.getElementById('q1Port');
+  q1PortEl.textContent = (q1PortTotal >= 0 ? '+' : '') + (q1PortTotal * 100).toFixed(1) + '%';
+  q1PortEl.style.color = q1PortTotal >= 0 ? 'var(--green)' : 'var(--red)';
+  const q1ActEl = document.getElementById('q1Active');
+  q1ActEl.textContent = (q1ActiveTot >= 0 ? '+' : '') + Math.round(q1ActiveTot * 10000) + 'bps';
+  q1ActEl.style.color = q1ActiveTot >= 0 ? 'var(--green)' : 'var(--red)';
+
+  // Scenario table
+  scenarioRows.sort((a, b) => a.stagImp - b.stagImp);
+  document.querySelector('#scenarioTable tbody').innerHTML = scenarioRows.map(r => {
+    const sCls = r.stagImp >= 0 ? 'pos' : 'neg';
+    const qCls = r.q1Imp >= 0 ? 'pos' : 'neg';
+    const flag = r.bothHurt ? '<span style="color:var(--red); font-weight:500;">Yes</span>' : '<span style="color:var(--tx3);">—</span>';
+    const shortS = r.sector.replace('Information Technology','Info Tech').replace('Communication Services','Comm Svcs').replace('Consumer Discretionary','Cons Disc').replace('Consumer Staples','Cons Stap').replace('Health Care','Health');
+    return `<tr><td>${shortS}</td><td class="r">${r.pw.toFixed(1)}%</td><td class="r" style="color:var(--tx2)">${r.iw.toFixed(1)}%</td><td class="r bold ${r.act >= 0 ? 'pos' : 'neg'}">${r.act >= 0 ? '+' : ''}${r.act.toFixed(1)}%</td><td class="r ${sCls}">${(r.stagImp*10000).toFixed(0)}bps</td><td class="r ${qCls}">${(r.q1Imp*10000).toFixed(0)}bps</td><td class="r">${flag}</td></tr>`;
+  }).join('');
+
+  // Stagflation chart — grouped bar: port weight vs SPX weight, colored by scenario return
+  const stagSorted = [...scenarioSectors].sort((a, b) => stagReturns[b] - stagReturns[a]);
+  const stagLabels = stagSorted.map(s => s.replace('Information Technology','Info Tech').replace('Communication Services','Comm Svcs').replace('Consumer Discretionary','Cons Disc').replace('Consumer Staples','Cons Stap').replace('Health Care','Health').replace('Real Estate','RE'));
+  const stagActiveData = stagSorted.map(s => {
+    const pw = sectorMap[s] ? sectorMap[s].port : 0;
+    const iw = sectorMap[s] ? sectorMap[s].idx : 0;
+    return Math.round((pw - iw) * 100) / 100;
+  });
+  const stagBarColors = stagSorted.map((s, i) => {
+    const act = stagActiveData[i];
+    const ret = stagReturns[s];
+    // Green if aligned (OW winner or UW loser), red if misaligned
+    if ((act > 0.1 && ret > 0) || (act < -0.1 && ret < 0)) return '#1D9E75';
+    if ((act < -0.1 && ret > 0) || (act > 0.1 && ret < 0)) return '#D85A30';
+    return '#B4B2A9';
+  });
+
+  if (stagChartInstance) stagChartInstance.destroy();
+  stagChartInstance = new Chart(document.getElementById('stagChart'), {
+    type: 'bar',
+    data: {
+      labels: stagLabels,
+      datasets: [{ data: stagActiveData, backgroundColor: stagBarColors, borderRadius: 2, barPercentage: 0.6 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { title: (items) => stagSorted[items[0].dataIndex] + ' (stag ret: ' + (stagReturns[stagSorted[items[0].dataIndex]]*100).toFixed(0) + '%)', label: ctx => 'Active wt: ' + (ctx.parsed.y >= 0 ? '+' : '') + ctx.parsed.y.toFixed(1) + '%' } } },
+      scales: {
+        x: { ticks: { color: txtSec, font: { size: 8 }, maxRotation: 45, autoSkip: false }, grid: { display: false }, border: { display: false } },
+        y: { ticks: { color: txtSec, font: { size: 10 }, callback: v => (v>=0?'+':'') + v + '%' }, grid: { color: gridC }, border: { display: false }, title: { display: true, text: 'Active weight', color: txtSec, font: { size: 10 } } }
+      }
+    }
+  });
+
+  // Q1 chart — same structure
+  const q1Sorted = [...scenarioSectors].sort((a, b) => q1Returns[b] - q1Returns[a]);
+  const q1Labels = q1Sorted.map(s => s.replace('Information Technology','Info Tech').replace('Communication Services','Comm Svcs').replace('Consumer Discretionary','Cons Disc').replace('Consumer Staples','Cons Stap').replace('Health Care','Health').replace('Real Estate','RE'));
+  const q1ActiveData = q1Sorted.map(s => {
+    const pw = sectorMap[s] ? sectorMap[s].port : 0;
+    const iw = sectorMap[s] ? sectorMap[s].idx : 0;
+    return Math.round((pw - iw) * 100) / 100;
+  });
+  const q1BarColors = q1Sorted.map((s, i) => {
+    const act = q1ActiveData[i];
+    const ret = q1Returns[s];
+    if ((act > 0.1 && ret > 0) || (act < -0.1 && ret < 0)) return '#1D9E75';
+    if ((act < -0.1 && ret > 0) || (act > 0.1 && ret < 0)) return '#D85A30';
+    return '#B4B2A9';
+  });
+
+  if (q1ChartInstance) q1ChartInstance.destroy();
+  q1ChartInstance = new Chart(document.getElementById('q1Chart'), {
+    type: 'bar',
+    data: {
+      labels: q1Labels,
+      datasets: [{ data: q1ActiveData, backgroundColor: q1BarColors, borderRadius: 2, barPercentage: 0.6 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { title: (items) => q1Sorted[items[0].dataIndex] + ' (Q1 ret: ' + (q1Returns[q1Sorted[items[0].dataIndex]]*100).toFixed(1) + '%)', label: ctx => 'Active wt: ' + (ctx.parsed.y >= 0 ? '+' : '') + ctx.parsed.y.toFixed(1) + '%' } } },
+      scales: {
+        x: { ticks: { color: txtSec, font: { size: 8 }, maxRotation: 45, autoSkip: false }, grid: { display: false }, border: { display: false } },
+        y: { ticks: { color: txtSec, font: { size: 10 }, callback: v => (v>=0?'+':'') + v + '%' }, grid: { color: gridC }, border: { display: false }, title: { display: true, text: 'Active weight', color: txtSec, font: { size: 10 } } }
+      }
+    }
+  });
+
+  // Show dashboard
+  uploadZone.style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+}
+</script>
+</body>
+</html>

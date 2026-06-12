@@ -1,0 +1,212 @@
+{
+  "main": {
+    "id": "75db2c6e9be7ffea",
+    "type": "split",
+    "children": [
+      {
+        "id": "e4ae76613ab987ea",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f6866adb678e7308",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e4ef256f2fc68598",
+    "type": "split",
+    "children": [
+      {
+        "id": "1a96c0914e5b1f0e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f64efa6bb2d38bfd",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "9eaef9a99be5bd1e",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "8856ab0efea4555b",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "b4aa4459d70e3f02",
+    "type": "split",
+    "children": [
+      {
+        "id": "3350cbcaeb8d4f16",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "01059e2c682e1b7e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "21ef3cf5a3c94cf2",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "59c7fead5a29422d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "e2cad1782d5edb5b",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "35edcf72b1d47a22",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "f64efa6bb2d38bfd",
+  "lastOpenFiles": [
+    "50_Research_Notes/APOL Ltr to Buffett.pdf",
+    "40_Themes/New Moats/Moat2 IPM/Final Moat Docs/~$e_Next_Scarce_Thing_SCRIPT_Edited.docx",
+    "40_Themes/New Moats/Moat2 IPM/Final Moat Docs/The_Next_Scarce_Thing_SCRIPT_Edited.docx",
+    "40_Themes/New Moats/Moat2 IPM/Final Moat Docs/~$e_Next_Scarce_Thing_SCRIPT.docx",
+    "40_Themes/New Moats/Moat2 IPM/Final Moat Docs/The_Next_Scarce_Thing_SCRIPT.docx",
+    "40_Themes/New Moats/Moat2 IPM/~$e_Next_Scarce_Thing_SCRIPT.docx",
+    "40_Themes/New Moats/Moat2 IPM/The_Next_Scarce_Thing_SCRIPT.docx",
+    "40_Themes/New Moats/Moat2 IPM/~$rget_Everything_Moats_SCRIPT.docx",
+    "40_Themes/New Moats/Moat2 IPM/Final Moat Docs/~$The Next Scarce Thing_Moats and AI_Final.pptx",
+    "40_Themes/New Moats/Moat2 IPM/Forget_Everything_Moats_SCRIPT.docx",
+    "40_Themes/New Moats/Moat2 IPM/Final Moat Docs/The Next Scarce Thing_Moats and AI_Final.pdf",
+    "40_Themes/New Moats/Chegg_vs_Verisk_Operational_vs_Evidentiary_Data.md",
+    "40_Themes/New Moats/Screenshot 2026-05-12 at 3.25.52 PM.png",
+    "node_modules/pptxgenjs/README.md",
+    "node_modules/image-size/Readme.md",
+    "node_modules/pptxgenjs/node_modules/@types/node/README.md",
+    "node_modules/queue/readme.md",
+    "node_modules/pptxgenjs/node_modules/undici-types/README.md",
+    "40_Themes/New Moats/HANDOFF_README.md",
+    "40_Themes/HANDOFF_README.md",
+    "30_Companies/AMZN/ACTIVE_AMZN Buy Note BMAs.md",
+    "30_Companies/ADP/Company_Card.md",
+    "00_README/tag-vocabulary.md",
+    "30_Companies/SNOW/Company_Card.md",
+    "30_Companies/MA/Thesis_Log.md",
+    "SOUL.md",
+    "20_Library/APK Work/UBER_APK_ANALYSIS_v4.628.10002.md",
+    "30_Companies/GEV/Company_Card.md",
+    "30_Companies/AXON/Thesis_Log.md",
+    "30_Companies/INTU/Company_Card.md"
+  ]
+}

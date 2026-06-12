@@ -1,0 +1,12 @@
+reg_no,site_name,county,permit_date,program_type,manufacturer,model,manufacture_year,kw_rating,bhp_rating,fuel_type,total_fuel_limit_gal_yr,max_nox_tpy,max_hours_yr
+21527,Microsoft Corporation - East Coast Data Center,Article 1 - Title V,7,04/24/2024,Caterpillar,ENG1,2010,1000,1474,diesel,149882,171.0,
+21527,Microsoft Corporation - East Coast Data Center,Article 1 - Title V,7,04/24/2024,Caterpillar,1,2010,2000,2937,diesel,149882,171.0,
+21527,Microsoft Corporation - East Coast Data Center,Article 1 - Title V,7,04/24/2024,Cummins,ENG61,2014,2500,3640,diesel,149882,171.0,
+21527,Microsoft Corporation - East Coast Data Center,Article 1 - Title V,7,04/24/2024,Cummins,ENG62-STK1,2014,2000,2919,diesel,149882,171.0,
+21527,Microsoft Corporation - East Coast Data Center,Article 1 - Title V,7,04/24/2024,Cummins,750,2014,3000,4307,diesel,149882,171.0,
+21527,Microsoft Corporation - East Coast Data Center,Article 1 - Title V,7,04/24/2024,Cummins,ENG153,2019,800,2023,diesel,149882,171.0,
+21527,Microsoft Corporation - East Coast Data Center,Article 1 - Title V,7,04/24/2024,Caterpillar,ENG156,2018,2500,3633,diesel,149882,171.0,
+11790,DP Facilities Inc South LLC,Article 6 - mNSR,1,08/23/2016,PARSE_FAILED,,,,,,,,
+21527,Microsoft Corporation - East Coast Data Center,Article 6 - mNSR,15,09/19/2023,PARSE_FAILED,,,,,,149882,20.5,
+11541,Northrop Grumman Systems Corporation,Article 6 - mNSR,3,05/16/2008,PARSE_FAILED,,,,,,,,
+30142,TECfusions Clarksville LLC,Article 6 - mNSR,3,02/12/2025,Caterpillar,3516B,,2250,3286,diesel,235200,33.9,
