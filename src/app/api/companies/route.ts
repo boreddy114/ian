@@ -8,7 +8,7 @@ export async function GET(req: Request) {
     const queryTicker = searchParams.get('ticker');
     const queryFile = searchParams.get('file'); // 'card' | 'log'
     
-    const vaultPath = '/Users/homefolder/Downloads/ian/ORGINAL/EquityVault/30_Companies';
+    const vaultPath = join(process.cwd(), 'ORGINAL', 'EquityVault', '30_Companies');
     
     if (queryTicker && queryFile) {
       const companyPath = join(vaultPath, queryTicker);

@@ -21,8 +21,8 @@ function generateDynamicFallback(
   const normalized = prompt.toLowerCase();
   
   // 1. Resolve paths for the ticker and skill
-  const vaultRoot = '/Users/homefolder/Downloads/ian/ORGINAL/EquityVault/30_Companies';
-  const originalRoot = '/Users/homefolder/Downloads/ian/ORGINAL';
+  const vaultRoot = join(process.cwd(), 'ORGINAL', 'EquityVault', '30_Companies');
+  const originalRoot = join(process.cwd(), 'ORGINAL');
   
   let companyCard = '';
   let thesisLog = '';
@@ -307,8 +307,8 @@ export async function POST(req: Request) {
     const { prompt, assistantType = 'designer', ticker = 'AAPL', skillId = 'ic-memo-skill', activeMemo, webSearchActive = false } = await req.json();
 
     // 1. Fetch directories / files to enrich prompt
-    const vaultRoot = '/Users/homefolder/Downloads/ian/ORGINAL/EquityVault/30_Companies';
-    const originalRoot = '/Users/homefolder/Downloads/ian/ORGINAL';
+    const vaultRoot = join(process.cwd(), 'ORGINAL', 'EquityVault', '30_Companies');
+    const originalRoot = join(process.cwd(), 'ORGINAL');
     
     let companyCardContent = '';
     let thesisLogContent = '';

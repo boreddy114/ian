@@ -5,7 +5,7 @@ import { execSync } from 'child_process';
 
 export async function GET() {
   try {
-    const originalPath = '/Users/homefolder/Downloads/ian/ORGINAL';
+    const originalPath = join(process.cwd(), 'ORGINAL');
     
     if (!existsSync(originalPath)) {
       return NextResponse.json({ skills: [] });
