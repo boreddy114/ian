@@ -58,9 +58,9 @@ export const MOCK_MEMOS: Record<string, any> = {
 
 export default function Home() {
   const [graphData, setGraphData] = useState(initialData);
-  const [activeMemoId, setActiveMemoId] = useState<string | null>("aapl_q3");
+  const [activeMemoId, setActiveMemoId] = useState<string | null>(null);
   const [assistantType, setAssistantType] = useState<'designer' | 'finance'>('designer');
-  const [memos, setMemos] = useState<Record<string, any>>(MOCK_MEMOS);
+  const [memos, setMemos] = useState<Record<string, any>>({});
   const [isGraphFullscreen, setIsGraphFullscreen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
@@ -68,9 +68,134 @@ export default function Home() {
   const [showPassword, setShowPassword] = useState(false);
   const [activeMobileView, setActiveMobileView] = useState<'assistant' | 'graph' | 'document'>('assistant');
 
+  // New state for dynamic database integration
+  const [companies, setCompanies] = useState<any[]>([]);
+  const [skills, setSkills] = useState<any[]>([]);
+  const [selectedTicker, setSelectedTicker] = useState("AAPL");
+  const [selectedSkillId, setSelectedSkillId] = useState("ic-memo-skill");
+  const [graphViewMode, setGraphViewMode] = useState<'3d' | 'transmission'>('3d');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [webSearchActive, setWebSearchActive] = useState(false);
+
+  // Load companies and skills on mount
+  // Load companies and skills on mount
+  useEffect(() => {
+    fetch('/api/companies')
+      .then(res => res.json())
+      .then(data => {
+        if (data.companies && data.companies.length > 0) {
+          setCompanies(data.companies);
+          setSelectedTicker(data.companies[0].ticker);
+        }
+      })
+      .catch(err => console.error("Error loading companies:", err));
+
+    fetch('/api/skills')
+      .then(res => res.json())
+      .then(data => {
+        if (data.skills && data.skills.length > 0) {
+          setSkills(data.skills);
+          const defaultSkill = data.skills.find((s: any) => s.id.includes('ic-memo'));
+          if (defaultSkill) {
+            setSelectedSkillId(defaultSkill.id);
+          } else {
+            setSelectedSkillId(data.skills[0].id);
+          }
+        }
+      })
+      .catch(err => console.error("Error loading skills:", err));
+  }, []);
+
+  // Automatically switch active memo when selected company changes
+  useEffect(() => {
+    if (!selectedTicker) return;
+    const companyMemos = Object.entries(memos)
+      .filter(([id, m]: any) => m && m.company === selectedTicker);
+    
+    if (companyMemos.length > 0) {
+      setActiveMemoId(companyMemos[0][0]);
+    } else {
+      setActiveMemoId(null);
+    }
+  }, [selectedTicker]);
+
+  // Rebuild graph dynamically based on vault companies and generated memos
+  useEffect(() => {
+    if (companies.length === 0) return;
+
+    const nodes: any[] = [
+      { id: "central", name: "EquityVault", group: "framework" }
+    ];
+    const links: any[] = [];
+
+    const addedSectors = new Set<string>();
+    const addedSubSectors = new Set<string>();
+
+    companies.forEach(company => {
+      const sectorName = company.sector || 'Technology';
+      const subSectorName = company.subSector || 'Software & Services';
+      
+      const sectorId = `sector_${sectorName}`;
+      const subSectorId = `subsector_${sectorName}_${subSectorName}`;
+
+      if (!addedSectors.has(sectorId)) {
+        nodes.push({
+          id: sectorId,
+          name: sectorName,
+          group: "sector"
+        });
+        links.push({
+          source: sectorId,
+          target: "central"
+        });
+        addedSectors.add(sectorId);
+      }
+
+      if (!addedSubSectors.has(subSectorId)) {
+        nodes.push({
+          id: subSectorId,
+          name: subSectorName,
+          group: "theme"
+        });
+        links.push({
+          source: subSectorId,
+          target: sectorId
+        });
+        addedSubSectors.add(subSectorId);
+      }
+
+      nodes.push({
+        id: company.ticker,
+        name: company.name,
+        group: "company"
+      });
+      links.push({
+        source: company.ticker,
+        target: subSectorId
+      });
+    });
+
+    Object.entries(memos).forEach(([id, memo]: any) => {
+      const companyTicker = memo.company || "AAPL";
+      if (nodes.some(n => n.id === companyTicker)) {
+        nodes.push({
+          id,
+          name: memo.title.slice(0, 18) + (memo.title.length > 18 ? '...' : ''),
+          group: "memo",
+          memoId: id
+        });
+        links.push({
+          source: id,
+          target: companyTicker
+        });
+      }
+    });
+
+    setGraphData({ nodes, links });
+  }, [companies, memos]);
+
   useEffect(() => {
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      // Prevent the default browser handling (which Next.js hook listens to)
       event.preventDefault();
       console.warn("Prevented unhandled promise rejection error:", event.reason);
     };
@@ -115,12 +240,12 @@ export default function Home() {
     setActiveMobileView('document');
   };
 
-  const handleGenerate = async (prompt: string) => {
+  const handleGenerate = async (prompt: string, webSearchActive: boolean = false) => {
     const type = assistantType;
     const activeSetter = type === 'designer' ? setDesignerMessages : setFinanceMessages;
     
-    // Add user message immediately
     activeSetter(prev => [...prev, { role: 'user', content: prompt }]);
+    setIsGenerating(true);
     
     try {
       const response = await fetch('/api/generate', {
@@ -129,7 +254,10 @@ export default function Home() {
         body: JSON.stringify({ 
           prompt, 
           assistantType: type,
-          activeMemo: type === 'designer' && activeMemoId ? memos[activeMemoId] : null
+          ticker: selectedTicker,
+          skillId: selectedSkillId,
+          activeMemo: type === 'designer' && activeMemoId ? memos[activeMemoId] : null,
+          webSearchActive
         })
       });
       
@@ -141,7 +269,6 @@ export default function Home() {
 
       if (type === 'designer') {
         if (data.isEdit && activeMemoId && data.memo) {
-          // Update existing active memo
           setMemos(prev => ({
             ...prev,
             [activeMemoId]: data.memo
@@ -153,17 +280,10 @@ export default function Home() {
             chart: responseChart
           }]);
         } else if (data.memo && data.memo.company) {
-          // Generate new memo
           const newMemoId = "new_memo_" + Date.now();
           setMemos(prev => ({
             ...prev,
             [newMemoId]: data.memo
-          }));
-
-          const newNodeId = "node_" + Date.now();
-          setGraphData(prev => ({
-            nodes: [...prev.nodes, { id: newNodeId, name: (data.memo.company || "New Memo").slice(0, 15), group: "memo", memoId: newMemoId }],
-            links: [...prev.links, { source: newNodeId, target: "6" }] // connect to AI theme
           }));
           
           setActiveMemoId(newMemoId);
@@ -174,7 +294,6 @@ export default function Home() {
             chart: responseChart
           }]);
         } else {
-          // No new memo or edit, just display AI text response
           setDesignerMessages(prev => [...prev, {
             role: 'ai',
             content: responseContent,
@@ -182,7 +301,6 @@ export default function Home() {
           }]);
         }
       } else {
-        // finance
         setFinanceMessages(prev => [...prev, {
           role: 'ai',
           content: responseContent,
@@ -195,12 +313,6 @@ export default function Home() {
             ...prev,
             [newMemoId]: data.memo
           }));
-
-          const newNodeId = "node_" + Date.now();
-          setGraphData(prev => ({
-            nodes: [...prev.nodes, { id: newNodeId, name: (data.memo.company || "New Memo").slice(0, 15), group: "memo", memoId: newMemoId }],
-            links: [...prev.links, { source: newNodeId, target: "6" }] // connect to AI theme
-          }));
           setActiveMemoId(newMemoId);
         }
       }
@@ -211,6 +323,54 @@ export default function Home() {
           ? "I encountered an error while synthesizing the research. Please ensure my API key is valid."
           : "I encountered an error while running the numbers. Please ensure my API key is valid."
       }]);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const getFilteredGraphData = () => {
+    if (graphViewMode === '3d') return graphData;
+    
+    const activeTicker = selectedTicker || "AAPL";
+    const keepNodeIds = new Set<string>();
+    keepNodeIds.add("central"); // central vault node
+    
+    const company = companies.find(c => c.ticker === activeTicker);
+    if (company) {
+      const sectorId = `sector_${company.sector || 'Technology'}`;
+      const subSectorId = `subsector_${company.sector || 'Technology'}_${company.subSector || 'Software & Services'}`;
+      const companyId = activeTicker;
+      
+      keepNodeIds.add(sectorId);
+      keepNodeIds.add(subSectorId);
+      keepNodeIds.add(companyId);
+      
+      Object.keys(memos).forEach(memoId => {
+        const memo = memos[memoId];
+        if (memo && memo.company === activeTicker) {
+          keepNodeIds.add(memoId);
+        }
+      });
+    } else {
+      keepNodeIds.add(activeTicker);
+    }
+    
+    const filteredNodes = graphData.nodes.filter(n => keepNodeIds.has(n.id));
+    const filteredLinks = graphData.links.filter((l: any) => {
+      const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
+      const targetId = typeof l.target === 'object' ? l.target.id : l.target;
+      return keepNodeIds.has(sourceId) && keepNodeIds.has(targetId);
+    });
+    
+    return { nodes: filteredNodes, links: filteredLinks };
+  };
+
+  const handleSelectorChange = (ticker: string, skillId: string) => {
+    setSelectedTicker(ticker);
+    setSelectedSkillId(skillId);
+    if (assistantType === 'designer') {
+      const autoPrompt = `Build memo for ${ticker} using ${skillId}`;
+      handleGenerate(autoPrompt, webSearchActive);
     }
   };
 
@@ -392,20 +552,39 @@ export default function Home() {
         financeMessages={financeMessages}
         onSend={handleGenerate}
         memos={memos}
+        companies={companies}
+        skills={skills}
+        selectedTicker={selectedTicker}
+        setSelectedTicker={setSelectedTicker}
+        selectedSkillId={selectedSkillId}
+        setSelectedSkillId={setSelectedSkillId}
+        onSelectorChange={handleSelectorChange}
         onLogout={() => {
           setIsLoggedIn(false);
           setPasswordInput("");
         }}
         activeMobileView={activeMobileView}
+        webSearchActive={webSearchActive}
+        setWebSearchActive={setWebSearchActive}
       />
 
-      {/* Pane 2: Knowledge Graph (3D) */}
       <div className={`nexus-pane graph-container mobile-view-pane ${activeMobileView === 'graph' ? 'active-mobile-pane' : ''} ${isGraphFullscreen ? "fullscreen" : ""}`}>
         <div className="pane-header pane-header-layout">
           <div className="pane-header-left">
-            <div className="tab active">
-              <span className="icon">🕸️</span> Nexus Graph
-            </div>
+            <button 
+              className={`tab ${graphViewMode === '3d' ? 'active' : ''}`}
+              onClick={() => setGraphViewMode('3d')}
+              style={{ background: 'none', border: 'none', outline: 'none' }}
+            >
+              <span className="icon">🕸️</span> 3D Network
+            </button>
+            <button 
+              className={`tab ${graphViewMode === 'transmission' ? 'active' : ''}`}
+              onClick={() => setGraphViewMode('transmission')}
+              style={{ background: 'none', border: 'none', outline: 'none' }}
+            >
+              <span className="icon">📡</span> Transmission Web
+            </button>
             <div className="graph-stats-badge">
               <span className="stats-dot"></span>
               <span>{graphData.nodes.length} Nodes</span>
@@ -430,7 +609,7 @@ export default function Home() {
           </button>
         </div>
         <div className="pane-content relative">
-          <GraphView data={graphData} onNodeClick={handleNodeClick} activeMemoId={activeMemoId} />
+          <GraphView data={getFilteredGraphData()} onNodeClick={handleNodeClick} activeMemoId={activeMemoId} mode={graphViewMode} activeMobileView={activeMobileView} isGraphFullscreen={isGraphFullscreen} />
           
           <div className="graph-controls">
             <div className="legend-item"><span className="dot memo"></span> Memos</div>
@@ -467,11 +646,7 @@ export default function Home() {
           )}
         </div>
         <div className="pane-content">
-          {activeMemoId ? (
-            <DocumentView memo={memos[activeMemoId]} />
-          ) : (
-            <div className="empty-state">Select a node or file to view the document.</div>
-          )}
+          <DocumentView memo={activeMemoId ? memos[activeMemoId] : null} isGenerating={isGenerating} selectedTicker={selectedTicker} />
         </div>
       </div>
 
